@@ -36,11 +36,7 @@ router.post('/adduser', function(req,res){
   });
 });
 
-router.get('/rooms', function(req, res, next) {
-  var db = req.db;
-  var collection = db.get('rooms');
-  collection.getElementsByTagName('');
-  collection.
+router.get('/rooms.html', function(req, res, next) {
   res.render('rooms', { title: 'Rooms'});
 });
 /*

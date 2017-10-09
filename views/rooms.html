@@ -23,7 +23,7 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li class="active"><a href="index.html">Home</a></li>
-        <li><a href="#">Rooms</a></li>
+        <li><a href="rooms.html">Rooms</a></li>
         <li><a href="#">Page 2</a></li>
         <li><a href="#">Page 3</a></li>
       </ul>
@@ -35,6 +35,16 @@
   </div>
 </nav>
 
+<script type="text/javascript">
+  var monk = require('monk');
+  var db = monk('mongodb://hugogarcia354:cecs445!@csulb-cecs-shard-00-00-4olcz.mongodb.net:27017,csulb-cecs-shard-00-01-4olcz.mongodb.net:27017,csulb-cecs-shard-00-02-4olcz.mongodb.net:27017/hotel?ssl=true&replicaSet=CSULB-CECS-shard-0&authSource=admin');
+  var collection = db.get('rooms');
+  for(i = 0; i < collection.stats.count; i++) {
+    var entry = collection.find({}, { fields: { name: i + 1 } });
+    document.write("POTATO");
+  }
+</script>    
+    
 <div class="row">
   <div class="col-sm-1"></div>
     <div class="col-sm-10">
