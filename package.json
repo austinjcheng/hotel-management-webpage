@@ -2,7 +2,7 @@
   "name": "hotel-management-webpage",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "dependencies": {
     "body-parser": "^1.18.2",
     "consolidate": "^0.14.5",
@@ -19,7 +19,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./bin/www"
+    "start": "node app"
   },
   "repository": {
     "type": "git",
