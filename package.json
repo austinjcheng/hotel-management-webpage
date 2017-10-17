@@ -7,6 +7,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "bootstrap": "^3.3.7",
+    "connect-flash": "^0.1.1",
     "consolidate": "^0.14.5",
     "cookie-parser": "^1.4.3",
     "debug": "^3.1.0",
