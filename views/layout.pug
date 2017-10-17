@@ -1,48 +1,74 @@
 doctype html
-html
+html(lang='en')
   head
-    title Hotel app
+    title Hotel Manager
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+  
     link(rel='stylesheet' href='/static/bootstrap/dist/css/bootstrap.css')
     link(rel='stylesheet' href='/css/style.css')
   body
     nav.navbar.navbar-inverse
-     .container
-       .navbar-header
-         button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
-           span.sr-only Toggle navigation
-           span.icon-bar
-           span.icon-bar
-           span.icon-bar
-         a.navbar-brand(href='/') Hotel Application
-       #navbar.collapse.navbar-collapse
-         ul.nav.navbar-nav
-           li
-             a(href='/') Home
-           if user
-             li
-               a(href='/1') Add Reservation
-         ul.nav.navbar-nav.navbar-right
-           if user
+      .container-fluid
+        .navbar-header
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#myNavbar')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='#') Hotel Manager
+        #myNavbar.collapse.navbar-collapse
+          ul.nav.navbar-nav
+            li.active
+              a(href='#') Home
             li
-              a(href='/2') Logout
-           else
-             li
-               a(href='/3') Register
-             li
-               a(href='/4') Login
+              a(href='rooms.html') Rooms
+            li
+              a(href='#') Page 2
+            li
+              a(href='#') Page 3
+          ul.nav.navbar-nav.navbar-right
+            li
+              a(href='/signup')
+                span.glyphicon.glyphicon-user
+                |  Sign Up
+            li
+              a(href='/login.html')
+                span.glyphicon.glyphicon-log-in
+                |  Login
     .container
-      != messages('message', locals)
-      if errors
-        each error, i in errors
-          div(class="alert alert-danger") #{error.msg}
-      block content
-      br
-      hr
-      footer
-      p Copyright &copy; 2017
+      .jumbotron
+        .row.text-center
+          h2 Hotel Management System
+          h3 Sign up today
+          a.btn.btn-primary(href='/signup', target='_blank') Sign up
+        #myCarousel.carousel.slide(data-ride='carousel')
+          // Indicators
+          ol.carousel-indicators
+            li.active(data-target='#myCarousel', data-slide-to='0')
+            li(data-target='#myCarousel', data-slide-to='1')
+            li(data-target='#myCarousel', data-slide-to='2')
+          // Wrapper for slides
+          .carousel-inner
+            .item.active
+              img.img-responsive(src='https://images.trvl-media.com/media/content/expus/graphics/launch/package1320x742.jpg', alt='Los Angeles')
+            .item
+              img.img-responsive(src='https://www.hotelindigolowereastside.com/wp-content/uploads/2015/09/20151218_Indigo-15236.jpg', alt='Chicago')
+            .item
+              img.img-responsive(src='http://s.marketwatch.com/public/resources/MWimages/MW-FP772_Hilton_ZG_20170706122123.jpg', alt='New York')
+          // Left and right controls
+          a.left.carousel-control(href='#myCarousel', data-slide='prev')
+            span.glyphicon.glyphicon-chevron-left
+            span.sr-only Previous
+          a.right.carousel-control(href='#myCarousel', data-slide='next')
+            span.glyphicon.glyphicon-chevron-right
+            span.sr-only Next
+      .container
+        p
+    footer.container-fluid.text-center
+      p
     script(src="/static/jquery/dist/jquery.js")
     script(src="/static/bootstrap/dist/js/bootstrap.js")
     script(src="/js/main.js")
 
 
-        
+  
