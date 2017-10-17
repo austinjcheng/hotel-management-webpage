@@ -22,6 +22,7 @@
     "morgan": "^1.9.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
+    "pug": "^2.0.0-rc.4",
     "serve-favicon": "^2.4.5",
     "swig": "^1.4.2"
   },
