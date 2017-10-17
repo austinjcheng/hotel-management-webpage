@@ -186,7 +186,8 @@ app.get('*', function(req, res, next){
 /**  let ReservationFromModel = require('./models/reservations');  */
 
  app.get('/', function(req, res){
-res.send('hi world');
+ //res.send('hi world');
+ res.render('layout');
 })
 
 /* -----
