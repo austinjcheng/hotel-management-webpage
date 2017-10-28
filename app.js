@@ -89,7 +89,7 @@ app.use(expressValidator({
   }
 }));
 
-/*
+
 // passport config
 require('./config/passport')(passport);
 
@@ -102,7 +102,7 @@ app.get('*', function(req, res, next){
   res.locals.user = req.user || null; // req.user(if login) or null (if not login)
   next(); // next calls the next route or next piece of middleware
  });
-*/
+
 
 
 // Bring in Models
