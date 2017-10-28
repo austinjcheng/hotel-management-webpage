@@ -135,11 +135,12 @@ app.get('/', function(req,res){
 let reservations = require('./routes/reservations'); // Include our reservations.js file from 'routes' folder.
 app.use('/reservations', reservations); // For anything that goes to /reservations, it's gonna go to the reservation.js file
 
+-----
+*/
+
 let users = require('./routes/users');
 app.use('/users', users);
 
------
-*/
 
 // Start server
 app.listen(3000, function(){

@@ -1,9 +1,15 @@
 var express = require('express');
 var router = express.Router();
+const bcrypt = require('bcryptjs');
+const passport = require('passport');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+// Bring in User Model
+let User = require('../models/user');
+
+// Login Form
+router.get('/login', function(req, res){
+//  res.send('heya login');
+  res.render('login');
 });
 
 module.exports = router;
