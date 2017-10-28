@@ -185,17 +185,19 @@ app.get('*', function(req, res, next){
 // Bring in Models
 /**  let ReservationFromModel = require('./models/reservations');  */
 
- app.get('/', function(req, res){
- //res.send('hi world');
- res.render('layoutNavBar');
-})
+app.get('/', function(req, res){
+//res.send('hi world');
+//res.render('layoutNavBar');
+res.render('signUpNowHomePage');
+
+});
 
 /* -----
 // Home route
 app.get('/', function(req,res){
    ReservationFromModel.find({}, function(err, reservationsVar){ // find all reservations with an empty curly brace {}
       if(err){
-        console.logg(err);
+        console.log(err);
       } else {
         // render the template
         res.render('index', {
