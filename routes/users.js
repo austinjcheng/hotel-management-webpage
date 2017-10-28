@@ -72,8 +72,23 @@ router.get('/login', function(req, res){
 });
 
 
+// Login process
+router.post('/login', function(req, res, next){
+  passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/users/login',
+    failureFlash: true
+  })(req, res, next );
+});
 
-
+/*
+// logout
+router.get('/logout', function(req, res){
+  req.logout();
+  req.flash('success', 'You are logged out');
+  res.redirect('/users/login');
+});
+*/
 
 
 module.exports = router;
