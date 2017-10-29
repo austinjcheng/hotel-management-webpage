@@ -1,0 +1,13 @@
+extends layout
+
+block content
+    h1 #{title} 
+    form(method='POST', action='/reservations/edit/'+reservation._id)
+      #form-group
+        label Room Number:
+        input.form-control(name='roomNum', type='text', value=reservation.roomNum)
+      #form-group
+        label Guest:
+        input.form-control(name='guest', type='text', value=reservation.guest)
+      br
+      input.btn.btn-primary(type='submit', value='Submit') 
