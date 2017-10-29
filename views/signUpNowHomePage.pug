@@ -21,7 +21,7 @@ html(lang='en')
             li.active
               a(href='#') Home
             li
-              a(href='rooms.html') Rooms
+              a(href='rooms') Rooms
             li
               a(href='#') Page 2
             li
@@ -42,9 +42,12 @@ html(lang='en')
     .container
       .jumbotron
         .row.text-center
-          h2 Hotel Management System
-          h3 Sign up today
-          a.btn.btn-primary(href='/users/register', target='_blank') Sign up
+          if user
+            h2 Hi User
+          else 
+            h2 Hotel Management System
+            h3 Sign up today
+            a.btn.btn-primary(href='/users/register', target='_blank') Sign up
         #myCarousel.carousel.slide(data-ride='carousel')
           // Indicators
           ol.carousel-indicators
