@@ -28,15 +28,6 @@ html(lang='en')
             li
               a(href='#') Page 3436
           ul.nav.navbar-nav.navbar-right
-            if employee && !user
-              a(href='/employees/logout') Employee Logout
-            else if !user 
-              li 
-                a(href='/employees/') Employee
-            if user && !employee
-              li 
-                a(href='/users/logout') Logout
-            else
               li
                 a(href='users/register')
                   span.glyphicon.glyphicon-user
@@ -45,12 +36,17 @@ html(lang='en')
                 a(href='users/login')
                   span.glyphicon.glyphicon-log-in
                   |  Login
+              li
     .container
       .jumbotron
         .row.text-center
+          h2 e #{employee}
+          h1 z #{user}
           if user
             h2 Hi Guest
             a.btn.btn-primary(href='/reservations/add') Book Now
+          else if employee
+              h2 Hi Employee
           else 
             h2 Hotel Management System
             h3 Sign up today

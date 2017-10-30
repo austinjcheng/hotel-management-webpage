@@ -45,7 +45,7 @@ passport.use('employee', new LocalStrategy(function(username, password, done){
       if(isMatch){
         return done(null, emp);
       } else {
-        return done(null,false, {message: 'Wrong password'});
+        return done(null,false, {message: 'Wrong Employee password'});
       }
     })
 

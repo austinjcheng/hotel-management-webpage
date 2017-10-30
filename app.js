@@ -116,6 +116,11 @@ app.get('/', function(req, res){
 res.render('layout');
 });
 
+app.get('/lala', function(req, res){
+
+res.render('EmpLoggedIn');
+});
+
 /* -----
 // Home route
 app.get('/', function(req,res){

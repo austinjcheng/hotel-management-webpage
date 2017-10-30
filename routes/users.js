@@ -81,6 +81,9 @@ router.post('/login', function(req, res, next){
   })(req, res, next );
 });
 
+router.get('/welcomeEmp', function(req, res, next){
+  res.send('welcome employee');
+});
 
 // logout
 router.get('/logout', function(req, res){

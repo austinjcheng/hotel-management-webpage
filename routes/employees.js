@@ -80,7 +80,7 @@ router.get('/login', function(req, res){
 // Login process
 router.post('/login', function(req, res, next){
   passport.authenticate('employee', {
-    successRedirect: '/',
+    successRedirect: '/lala',
     failureRedirect: '/employees/login',
     failureFlash: true
   })(req, res, next );
