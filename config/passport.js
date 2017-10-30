@@ -1,11 +1,12 @@
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/user');
+const Employee = require('../models/employee')
 const config = require('../config/database');
 const bcrypt = require('bcryptjs');
 
 module.exports = function(passport){
   // Local Strategy
-  passport.use(new LocalStrategy(function(username, password, done){
+  passport.use('user', new LocalStrategy(function(username, password, done){
     // match username
     let query = {username: username};
     User.findOne(query, function(err, user){
@@ -37,5 +38,7 @@ module.exports = function(passport){
     });
   });
 
+// Multiple "local" strategies #50
+// https://github.com/jaredhanson/passport/issues/50
 
 }

@@ -28,7 +28,12 @@ html(lang='en')
             li
               a(href='#') Page 3436
           ul.nav.navbar-nav.navbar-right
-            if user
+            if employee && !user
+              a(href='/employees/logout') Employee Logout
+            else if !user 
+              li 
+                a(href='/employees/') Employee
+            if user && !employee
               li 
                 a(href='/users/logout') Logout
             else

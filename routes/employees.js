@@ -4,11 +4,17 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
 // Bring in User Model
-let User = require('../models/user');
+let Employee = require('../models/employee');
+
+router.get('/', function(req, res){
+  //res.send('test employee');
+  res.render('Emp');
+});
+
 
 // Register form
 router.get('/register', function(req, res){
-  res.render('register');
+  res.render('EmpRegister');
 });
 
 // Register process
@@ -30,11 +36,11 @@ router.post('/register', function(req, res){
   let errors = req.validationErrors();
 
   if(errors){
-    res.render('register', {
+    res.render('EmpRegister', {
       errors: errors
     });
   }  else {
-    let newUser = new User({
+    let newEmployee = new Employee({
       name: name,
       email: email,
       username: username,
@@ -42,19 +48,19 @@ router.post('/register', function(req, res){
     });
 
     bcrypt.genSalt(10, function(err, salt){
-      bcrypt.hash(newUser.password, salt, function(err, hashedPassword){
+      bcrypt.hash(newEmployee.password, salt, function(err, hashedPassword){
         if(err){
           console.log(err);
         }
-        newUser.password = hashedPassword;
+        newEmployee.password = hashedPassword;
 
-        newUser.save(function(err){
+        newEmployee.save(function(err){
           if(err){
             console.log(err);
             return;
           } else {
-            req.flash('success', 'You are now registered and can log in');
-            res.redirect('/users/login');
+            req.flash('success', 'Hi new employee, you are now registered and can log in');
+            res.redirect('/employees/login');
           }
         })
       });
@@ -67,16 +73,15 @@ router.post('/register', function(req, res){
 
 // Login Form
 router.get('/login', function(req, res){
-//  res.send('heya login');
-  res.render('login');
+  res.render('EmpLogin');
 });
 
 
 // Login process
 router.post('/login', function(req, res, next){
-  passport.authenticate('user', {
+  passport.authenticate('local', {
     successRedirect: '/',
-    failureRedirect: '/users/login',
+    failureRedirect: '/employees/login',
     failureFlash: true
   })(req, res, next );
 });
@@ -86,7 +91,7 @@ router.post('/login', function(req, res, next){
 router.get('/logout', function(req, res){
   req.logout();
   req.flash('success', 'You are logged out');
-  res.redirect('/users/login');
+  res.redirect('/employees/login');
 });
 
 
