@@ -100,7 +100,6 @@ app.use(passport.session());
 // create global user variable. asterisk means for all routes
 app.get('*', function(req, res, next){
   res.locals.user = req.user || null; // req.user(if login) or null (if not login)
-  res.locals.employee = req.employee || null;
   next(); // next calls the next route or next piece of middleware
  });
 
@@ -116,10 +115,7 @@ app.get('/', function(req, res){
 res.render('layout');
 });
 
-app.get('/lala', function(req, res){
 
-res.render('EmpLoggedIn');
-});
 
 /* -----
 // Home route
@@ -144,9 +140,6 @@ app.use('/reservations', reservations); // For anything that goes to /reservatio
 
 let users = require('./routes/users');
 app.use('/users', users);
-
-let employees = require('./routes/employees');
-app.use('/employees', employees);
 
 // Start server
 app.listen(3000, function(){
