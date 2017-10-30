@@ -79,7 +79,7 @@ router.get('/login', function(req, res){
 
 // Login process
 router.post('/login', function(req, res, next){
-  passport.authenticate('local', {
+  passport.authenticate('employee', {
     successRedirect: '/',
     failureRedirect: '/employees/login',
     failureFlash: true
