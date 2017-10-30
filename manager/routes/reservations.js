@@ -3,7 +3,7 @@ const router = express.Router();
 
 let ReservationFromModel = require('../models/reservation');
 
-let UserFromModel = require('../models/user');
+let EmployeeFromModel = require('../models/employee');
 
 
 
@@ -34,7 +34,7 @@ router.post('/add', function(req, res){
 
        let reservation = ReservationFromModel();
        reservation.roomNum = req.body.roomNum;
-       reservation.guest = req.user._id;
+       reservation.guest = req.emp._id;
 
        reservation.save(function(err){
          if(err){
@@ -100,14 +100,14 @@ router.post('/edit/:id', function(req, res){
 
 router.delete('/:id', function(req, res){
   // AJAX for delete
-  if(!req.user._id){
+  if(!req.emp._id){
      res.status(500).send();
   }
 
   let query = {_id: req.params.id}
 
    ReservationFromModel.findById(req.params.id, function(err, reservation){
-       if(reservation.guest != req.user._id){
+       if(reservation.guest != req.emp._id){
            res.status(500).send();
        } else {
            ReservationFromModel.remove(query, function(err){
@@ -128,10 +128,10 @@ router.delete('/:id', function(req, res){
 // Get Single Reservation
 router.get('/:id', function(req, res){ // colon is placeholder of anything. anything in this case, is the id.
     ReservationFromModel.findById(req.params.id, function(err, reservationResponse){
-      UserFromModel.findById(reservationResponse.guest, function(err, user){
+      EmployeeFromModel.findById(reservationResponse.guest, function(err, emp){
          res.render('reservation', {
               reservation: reservationResponse,
-               guest: user.name,
+               guest: emp.name,
          });
       });
     });
@@ -146,7 +146,7 @@ function ensureAuthenticated(req, res, next){
     return next();
   } else{
     req.flash('danger', 'Please login');
-    res.redirect('/users/login');
+    res.redirect('/employees/login');
   }
 }
 

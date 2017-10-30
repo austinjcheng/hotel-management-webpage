@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
 // Bring in User Model
-let User = require('../models/user');
+let Employee = require('../models/employee');
 
 // Register form
 router.get('/register', function(req, res){
@@ -34,7 +34,7 @@ router.post('/register', function(req, res){
       errors: errors
     });
   }  else {
-    let newUser = new User({
+    let newUser = new Employee({
       name: name,
       email: email,
       username: username,
@@ -54,7 +54,7 @@ router.post('/register', function(req, res){
             return;
           } else {
             req.flash('success', 'You are now registered and can log in');
-            res.redirect('/users/login');
+            res.redirect('/employees/login');
           }
         })
       });
@@ -74,9 +74,9 @@ router.get('/login', function(req, res){
 
 // Login process
 router.post('/login', function(req, res, next){
-  passport.authenticate('user', {
+  passport.authenticate('employee', {
     successRedirect: '/',
-    failureRedirect: '/users/login',
+    failureRedirect: '/employees/login',
     failureFlash: true
   })(req, res, next );
 });
@@ -89,7 +89,7 @@ router.get('/welcomeEmp', function(req, res, next){
 router.get('/logout', function(req, res){
   req.logout();
   req.flash('success', 'You are logged out');
-  res.redirect('/users/login');
+  res.redirect('/employees/login');
 });
 
 
