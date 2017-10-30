@@ -10,6 +10,14 @@ let reservationSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  startDate: {
+    type: Date,
+    require: true
+  },
+  endDate: {
+    type: Date,
+    require: true
+  }
 });
 
 let Reservation = module.exports = mongoose.model('Reservation', reservationSchema);

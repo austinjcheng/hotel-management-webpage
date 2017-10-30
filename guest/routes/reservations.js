@@ -22,6 +22,8 @@ router.post('/add', function(req, res){
   //req.checkBody('roomNum', 'Room Number is required').notEmpty();
   req.checkBody('roomstyle', 'roomstyle is required').notEmpty();
   //req.checkBody('guest', 'Guest is required').notEmpty();
+  req.checkBody('startDate', 'Start Date is required').notEmpty();
+  req.checkBody('endDate', 'End Date is required').notEmpty();
 
   // Get Errors
     let errors = req.validationErrors();
@@ -36,6 +38,8 @@ router.post('/add', function(req, res){
        let reservation = ReservationFromModel();
        reservation.roomstyle = req.body.roomstyle;
        reservation.guest = req.user._id;
+       reservation.startDate = req.body.startDate;
+       reservation.endDate = req.body.endDate;
 
        reservation.save(function(err){
          if(err){
@@ -77,6 +81,8 @@ router.post('/edit/:id', function(req, res){
 
   reservation.roomstyle = req.body.roomstyle;
   reservation.guest = req.body.guest;
+  reservation.startDate = req.body.startDate;
+  reservation.endDate = req.body.endDate;
 
   // create a query to specify which reservation we would like to update
   let query =  {_id: req.params.id}

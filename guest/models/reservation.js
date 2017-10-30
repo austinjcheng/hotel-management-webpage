@@ -9,6 +9,14 @@ let reservationSchema = mongoose.Schema({
   guest: {
     type: String,
     required: true
+  },
+  startDate: {
+    type: Date,
+    require: true
+  },
+  endDate: {
+    type: Date,
+    require: true
   }
 });
 

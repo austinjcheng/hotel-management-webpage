@@ -9,7 +9,10 @@ block content
       p RoomType: #{reservation.roomstyle}
       //- a(href="/reservations/"+reservation._id)= reservation.roomstyle  
       p Reserved by:
-      a(href="/reservations/"+reservation._id)= reservation.guest  
+      a(href="/reservations/"+reservation._id)= reservation.guest
+      p Start Date: #{reservation.startDate}
+      p End Date: #{reservation.endDate}
+
 
 
       
