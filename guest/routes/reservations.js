@@ -16,6 +16,11 @@ router.get('/add', ensureAuthenticated, function(req, res){
   });
 });
 
+router.get('/users/logout', ensureAuthenticated, function(req, res){
+  req.logout();
+  req.flash('success', 'U are logged out');
+  res.redirect('/users/login');
+});
 
 // Add Sumbit POST route
 router.post('/add', function(req, res){
