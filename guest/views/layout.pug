@@ -2,7 +2,7 @@
 doctype html
 html(lang='en')
   head
-    title Hotel Manager 
+    title Hotel Client
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1')
   
@@ -16,7 +16,7 @@ html(lang='en')
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a.navbar-brand(href='#') Hotel Manager
+          a.navbar-brand(href='#') Hotel Client
         #myNavbar.collapse.navbar-collapse
           ul.nav.navbar-nav
             li.active
@@ -49,7 +49,7 @@ html(lang='en')
             h2 Hi #{user.username}
             a.btn.btn-primary(href='/reservations/add') Book Now
           else 
-            h2 Hotel Management System
+            h2 Hotel Client
             h3 Sign up today
             a.btn.btn-primary(href='/users/register') Sign up
         #myCarousel.carousel.slide(data-ride='carousel')
