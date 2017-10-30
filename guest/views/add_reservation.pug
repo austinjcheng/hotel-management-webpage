@@ -10,9 +10,9 @@ block content
                 each roomstyle in roomstyleOptions
                   option(value=(roomstyle.value)) #{roomstyle.value}    
       div.form-group
-      label(for='startDate') startDate:
+      label(for='startDate') Start Date:
       input#startDate.form-control(type='date', name='startDate', value=(undefined===reservation ? '' : reservation.startDate) )
-      label(for='endDate') startDate:
+      label(for='endDate') End Date:
       input#endDate.form-control(type='date', name='endDate', value=(undefined===reservation ? '' : reservation.endDate) )
       br
         
