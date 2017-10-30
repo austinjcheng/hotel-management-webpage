@@ -2,9 +2,25 @@ const express = require('express');
 const router = express.Router();
 
 let ReservationFromModel = require('../models/reservation');
+let UserFromModel = require('../models/user');
 
 let EmployeeFromModel = require('../models/employee');
 
+
+// Room route
+router.get('/rooms', ensureAuthenticated, function(req,res){
+   ReservationFromModel.find({}, function(err, reservationsVar){ // find all reservations with an empty curly brace {}
+      if(err){
+        console.log(err);
+      } else {
+        // render the template
+        res.render('rooms', {
+          title: 'Rooms Reserved',
+          reservations: reservationsVar
+        });
+    }
+  });
+})
 
 
 // Add Route
@@ -128,10 +144,9 @@ router.delete('/:id', function(req, res){
 // Get Single Reservation
 router.get('/:id', function(req, res){ // colon is placeholder of anything. anything in this case, is the id.
     ReservationFromModel.findById(req.params.id, function(err, reservationResponse){
-      EmployeeFromModel.findById(reservationResponse.guest, function(err, user){
+      UserFromModel.findById(reservationResponse.guest, function(err, user){
          res.render('reservation', {
-              reservation: reservationResponse,
-               guest: user.name,
+              reservation: reservationResponse
          });
       });
     });

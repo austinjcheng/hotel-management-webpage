@@ -1,4 +1,13 @@
 extends layoutNavBar
-
+//- comment testing
 block content
-h1 Rooms
+  h1 Rooms
+  h1 #{title} 
+  ul.list-group
+  each reservation, i in reservations
+    li.list-group-item
+      p Room Number:
+      a(href="/reservations/"+reservation._id)= reservation.roomNum  
+
+
+      

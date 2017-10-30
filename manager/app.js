@@ -105,8 +105,8 @@ app.get('*', function(req, res, next){
 
 
 
-// Bring in Models
-/**  let ReservationFromModel = require('./models/reservations');  */
+ //Bring in Models
+ let ReservationFromModel = require('./models/reservation');
 
 app.get('/', function(req, res){
 //res.send('hi world');
@@ -117,23 +117,9 @@ res.render('layout');
 
 
 
-/* -----
-// Home route
-app.get('/', function(req,res){
-   ReservationFromModel.find({}, function(err, reservationsVar){ // find all reservations with an empty curly brace {}
-      if(err){
-        console.log(err);
-      } else {
-        // render the template
-        res.render('index', {
-          title: 'Rooms Reserved',
-          reservations: reservationsVar
-        });
-    }
-  });
-})
 
-*/
+
+
 // Route files
 let reservations = require('./routes/reservations'); // Include our reservations.js file from 'routes' folder.
 app.use('/reservations', reservations); // For anything that goes to /reservations, it's gonna go to the reservation.js file

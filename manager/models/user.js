@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-// Employee Schema
-const EmployeeSchema = mongoose.Schema({
+// User Schema
+const UserSchema = mongoose.Schema({
   name:{
     type: String,
     required: true
@@ -20,4 +20,4 @@ const EmployeeSchema = mongoose.Schema({
   }
 });
 
-const Employee = module.exports = mongoose.model('Employee', EmployeeSchema);
+const User = module.exports = mongoose.model('User', UserSchema);
