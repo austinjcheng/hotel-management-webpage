@@ -34,7 +34,7 @@ router.post('/add', function(req, res){
 
        let reservation = ReservationFromModel();
        reservation.roomNum = req.body.roomNum;
-       reservation.guest = req.emp._id;
+       reservation.guest = req.user._id;
 
        reservation.save(function(err){
          if(err){
@@ -100,14 +100,14 @@ router.post('/edit/:id', function(req, res){
 
 router.delete('/:id', function(req, res){
   // AJAX for delete
-  if(!req.emp._id){
+  if(!req.user._id){
      res.status(500).send();
   }
 
   let query = {_id: req.params.id}
 
    ReservationFromModel.findById(req.params.id, function(err, reservation){
-       if(reservation.guest != req.emp._id){
+       if(reservation.guest != req.user._id){
            res.status(500).send();
        } else {
            ReservationFromModel.remove(query, function(err){
@@ -128,10 +128,10 @@ router.delete('/:id', function(req, res){
 // Get Single Reservation
 router.get('/:id', function(req, res){ // colon is placeholder of anything. anything in this case, is the id.
     ReservationFromModel.findById(req.params.id, function(err, reservationResponse){
-      EmployeeFromModel.findById(reservationResponse.guest, function(err, emp){
+      EmployeeFromModel.findById(reservationResponse.guest, function(err, user){
          res.render('reservation', {
               reservation: reservationResponse,
-               guest: emp.name,
+               guest: user.name,
          });
       });
     });
