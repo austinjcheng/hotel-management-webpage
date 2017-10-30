@@ -49,7 +49,7 @@ router.post('/add', function(req, res){
      } else {
 
        let reservation = ReservationFromModel();
-       reservation.roomNum = req.body.roomNum;
+       reservation.roomstyle = req.body.roomstyle;
        reservation.guest = req.user._id;
 
        reservation.save(function(err){
@@ -90,7 +90,7 @@ router.post('/edit/:id', function(req, res){
   // Not creating a new reservation, so set reservation to an empty object
   let reservation = {};
 
-  reservation.roomNum = req.body.roomNum;
+  reservation.roomstyle = req.body.roomstyle;
   reservation.guest = req.body.guest;
 
   // create a query to specify which reservation we would like to update
