@@ -1,4 +1,5 @@
 let mongoose = require('mongoose');
+var moment = require('moment');
 
 // Reservation Schema
 let reservationSchema = mongoose.Schema({
@@ -18,6 +19,20 @@ let reservationSchema = mongoose.Schema({
     type: Date,
     require: true
   }
+});
+
+
+reservationSchema
+.virtual('start_date_formatted')
+.get(function () {
+  return moment(this.startDate).format('MMMM Do, YYYY');
+});
+
+
+reservationSchema
+.virtual('end_date_formatted')
+.get(function () {
+  return moment(this.endDate).format('MMMM Do, YYYY');
 });
 
 let Reservation = module.exports = mongoose.model('Reservation', reservationSchema);

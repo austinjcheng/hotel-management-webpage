@@ -10,8 +10,8 @@ block content
       //- a(href="/reservations/"+reservation._id)= reservation.roomstyle  
       p Reserved by:
       a(href="/reservations/"+reservation._id)= reservation.guest
-      p Start Date: #{reservation.startDate}
-      p End Date: #{reservation.endDate}
+      p Start Date: #{reservation.start_date_formatted}
+      p End Date: #{reservation.end_date_formatted}
 
 
 
