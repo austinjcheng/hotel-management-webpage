@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const moment = require('moment');
 
 let ReservationFromModel = require('../models/reservation');
 
@@ -29,6 +30,7 @@ router.post('/add', function(req, res){
   //req.checkBody('guest', 'Guest is required').notEmpty();
   req.checkBody('startDate', 'Start Date is required').notEmpty();
   req.checkBody('endDate', 'End Date is required').notEmpty();
+
 
 
   // Get Errors
