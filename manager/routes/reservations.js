@@ -155,6 +155,13 @@ router.get('/:id', function(req, res){ // colon is placeholder of anything. anyt
 
 
 
+// logout
+router.get('/employees/logout', function(req, res){
+  req.logout();
+  req.flash('success', 'You are logged out');
+  res.redirect('/employees/login');
+});
+
 // access control
 
 function ensureAuthenticated(req, res, next){

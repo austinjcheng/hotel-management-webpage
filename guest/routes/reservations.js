@@ -30,6 +30,7 @@ router.post('/add', function(req, res){
   req.checkBody('startDate', 'Start Date is required').notEmpty();
   req.checkBody('endDate', 'End Date is required').notEmpty();
 
+
   // Get Errors
     let errors = req.validationErrors();
 
