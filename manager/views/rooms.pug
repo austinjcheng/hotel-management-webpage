@@ -1,0 +1,18 @@
+extends layoutNavBar
+//- comment testing
+block content
+  h1 Rooms
+  h1 #{title} 
+  ul.list-group
+  each reservation, i in reservations
+    li.list-group-item
+      p RoomType: #{reservation.roomstyle}
+      //- a(href="/reservations/"+reservation._id)= reservation.roomstyle  
+      p Reserved by:
+      a(href="/reservations/"+reservation._id)= reservation.guest
+      p Start Date: #{reservation.start_date_formatted}
+      p End Date: #{reservation.end_date_formatted}
+
+
+
+      

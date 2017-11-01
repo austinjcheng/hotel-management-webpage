@@ -1,0 +1,126 @@
+doctype html
+html(lang='en')
+  head
+    title Hotel Client
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    
+    link(rel='stylesheet', href='//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css')
+    link(rel='stylesheet' href='/static/bootstrap/dist/css/bootstrap.css')
+    link(rel='stylesheet' href='/css/style.css')
+    //-script(src="/static/jquery/dist/jquery.js")
+    script(src="/static/bootstrap/dist/js/bootstrap.js")
+    //-script(src="/js/main.js")
+    script(src='https://code.jquery.com/jquery-1.12.4.js')
+    script(src='https://code.jquery.com/ui/1.12.1/jquery-ui.js')
+
+    script.
+      $( function() {
+      $( "#datepicker" ).datepicker();
+
+      $("#startDate").datepicker({
+            numberOfMonths: 1,
+            onSelect: function(selected) {
+              $("#endDate").datepicker("option","minDate", selected)
+            }
+        });
+        $("#endDate").datepicker({ 
+            numberOfMonths: 1,
+            onSelect: function(selected) {
+               $("#startDate").datepicker("option","maxDate", selected)
+            }
+        });  
+      
+        $("#txtFromDate").datepicker({
+              numberOfMonths: 2,
+              onSelect: function(selected) {
+                $("#txtToDate").datepicker("option","minDate", selected)
+              }
+          });
+          $("#txtToDate").datepicker({ 
+              numberOfMonths: 2,
+              onSelect: function(selected) {
+                 $("#txtFromDate").datepicker("option","maxDate", selected)
+              }
+          });  
+      
+      });
+
+
+    
+      
+  body
+    nav.navbar.navbar-inverse
+      .container-fluid
+        .navbar-header
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#myNavbar')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='/') Hotel Client
+        #myNavbar.collapse.navbar-collapse
+          ul.nav.navbar-nav
+            li.active
+              a(href='/') Home
+            li
+              a(href='/reservations/add') Add reservation
+            li
+              a(href='#') Page 2
+            li
+              a(href='#') Page 3dfdffd
+          ul.nav.navbar-nav.navbar-right
+            if user
+              li
+                a(href='users/logout')
+                  span.glyphicon.glyphicon-user
+                  |  Log out
+            else 
+              li
+                a(href='/users/register')
+                  span.glyphicon.glyphicon-user
+                  |  Sign Up
+              li
+                a(href='/users/login')
+                  span.glyphicon.glyphicon-log-in
+                  |  Login
+    .container
+      != messages('message', locals)
+      if errors
+        each error, i in errors
+          div(class="alert alert-danger") #{error.msg}
+      
+      
+          h1 #{title}
+          
+          
+    form(method='POST', action='/reservations/add')
+      
+      
+
+      
+      #form-group
+        label(for='roomstyle') Room Style (Select 1)
+          - const roomstyleOptions = [{value: 'Standard Single'}, {value: 'Superior Twin'}, {value: 'Deluxe Double'}, {value: 'Family Suite'}]
+            select#roomstyle(name='roomstyle' size='4' multiple required)
+                each roomstyle in roomstyleOptions
+                  option(value=(roomstyle.value)) #{roomstyle.value}    
+      
+      div.form-group
+      label(for='startDate') Start Date:
+      input#startDate.form-control(type='text', name='startDate', value=(undefined===reservation ? '' : reservation.startDate) )
+      label(for='endDate') End Date:
+      input#endDate.form-control(type='text', name='endDate', value=(undefined===reservation ? '' : reservation.endDate) )
+      br
+                         
+      input.btn.btn-primary(type='submit', value='Submit')
+      
+      
+      
+      
+      
+
+      br
+      hr
+    footer.container-fluid.text-center
+      p Copyright &copy; 2017
+    

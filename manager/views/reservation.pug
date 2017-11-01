@@ -1,0 +1,10 @@
+extends layoutNavBar
+
+block content
+  h1 RoomStyle: #{reservation.roomstyle}
+  h5 Reserved by #{guest}
+  hr
+  if user
+    if user.id == reservation.guest
+      a.btn.btn-default(href='/reservations/edit/'+reservation._id) Edit
+      a.btn.btn-danger.delete-reservation(href='#', data-id=reservation._id) Delete 
