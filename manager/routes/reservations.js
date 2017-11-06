@@ -50,8 +50,8 @@ router.post('/add', function(req, res){
 
        let reservation = ReservationFromModel();
        reservation.roomstyle = req.body.roomstyle;
-       //reservation.guest = req.user._id;
-       reservation.guest = req.user.name;
+       reservation.guest = req.user._id;
+       //reservation.guest = req.user.name;
 
        reservation.save(function(err){
          if(err){

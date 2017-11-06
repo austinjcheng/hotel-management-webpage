@@ -9,6 +9,8 @@ const passport = require('passport');
 const config = require('./config/database');
 
 
+
+
 // Set up mongoose connection
 let mongoose = require('mongoose');
 /*
@@ -18,6 +20,9 @@ mongoose.connect(mongoDB, {
   useMongoClient: true
 });
 */
+
+
+mongoose.Promise = global.Promise;
 
 mongoose.connect(config.database, {
   useMongoClient: true

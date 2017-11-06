@@ -1,6 +1,8 @@
 let mongoose = require('mongoose');
 let moment = require('moment');
 
+var Schema = mongoose.Schema;
+
 // Reservation Schema
 let reservationSchema = mongoose.Schema({
   roomstyle: {
@@ -8,8 +10,10 @@ let reservationSchema = mongoose.Schema({
     required: true
   },
   guest: {
-    type: String,
+    type: Schema.ObjectId, ref: 'Guest',
     required: true
+    //type: String,
+    //required: true
   },
   startDate: {
     type: Date,

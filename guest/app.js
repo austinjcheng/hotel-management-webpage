@@ -19,6 +19,8 @@ mongoose.connect(mongoDB, {
 });
 */
 
+mongoose.Promise = global.Promise;
+
 mongoose.connect(config.database, {
   useMongoClient: true
 });
