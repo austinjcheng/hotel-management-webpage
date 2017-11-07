@@ -8,11 +8,12 @@ let reservationSchema = mongoose.Schema({
   guest: {
   //  type: String,
   //  required: true
-    type: Schema.ObjectId, ref: 'Guest',
+    type: Schema.ObjectId, ref: 'User',
     required: true
   },
   roomstyle: {
     type: String,
+  //  type: Schema.ObjectId, ref: 'RoomStyle'
     required: true
   },
   startDate: {
@@ -22,7 +23,7 @@ let reservationSchema = mongoose.Schema({
   endDate: {
     type: Date,
     require: true
-  }
+  },
 });
 
 

@@ -10,24 +10,25 @@ let reservationSchema = mongoose.Schema({
     required: true
   },
   guest: {
-    type: Schema.ObjectId, ref: 'Guest',
+    type: Schema.ObjectId, ref: 'User',
     required: true
-    //type: String,
-    //required: true
   },
   startDate: {
     type: Date,
-    require: true
+    required: true
   },
   endDate: {
     type: Date,
-    require: true
+    required: true
+  },
+  roomNum: {
+    type: Schema.ObjectId, ref: 'Room',
+    required: false
+  },
+  processed: {
+    type: String,
+    required: false
   }
 });
 
 let Reservation = module.exports = mongoose.model('Reservation', reservationSchema);
-
-
-/*
-https://medium.com/@micahbales/how-to-programmatically-select-items-in-an-html-dropdown-menu-including-multiple-selections-f1797d0ae268
-*/

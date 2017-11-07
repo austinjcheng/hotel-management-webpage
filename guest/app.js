@@ -119,6 +119,8 @@ res.render('layout');
 
 
 
+
+
 /* -----
 // Home route
 app.get('/', function(req,res){
@@ -142,6 +144,40 @@ app.use('/reservations', reservations); // For anything that goes to /reservatio
 
 let users = require('./routes/users');
 app.use('/users', users);
+
+
+let UserFromModel = require('./models/user');
+let ReservationFromModel = require('./models/reservation');
+let RoomFromModel = require('./models/room');
+
+
+
+app.get('/userJSON', function(req, res){
+  //res.send('hi userJSON');
+
+   UserFromModel.find({},{},function(e,docs){
+       res.json(docs);
+   });
+});
+
+app.get('/reservationJSON', function(req, res){
+
+   ReservationFromModel.find({},{},function(e,docs){
+       res.json(docs);
+   });
+});
+
+app.get('/roomJSON', function(req, res){
+
+   RoomFromModel.find({},{},function(e,docs){
+       res.json(docs);
+   });
+});
+
+
+
+
+
 
 // Start server
 app.listen(3002, function(){
