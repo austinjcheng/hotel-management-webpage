@@ -40,4 +40,5 @@ reservationSchema
   return moment(this.endDate).format('MMMM Do, YYYY');
 });
 
+
 let Reservation = module.exports = mongoose.model('Reservation', reservationSchema);

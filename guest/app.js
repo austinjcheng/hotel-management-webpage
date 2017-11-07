@@ -174,8 +174,128 @@ app.get('/roomJSON', function(req, res){
    });
 });
 
+app.get('/resFilteredJSON', function(req, res){
+
+  ReservationFromModel.find(
+  //  {roomstyle: 'Standard Single'}
+  {endDate:  {"$lte": new Date("2017-11-11")} }
+
+  ,function(e,docs){
+      res.json(docs);
+  });
+});
 
 
+// https://www.joshmorony.com/building-a-hotel-booking-app-with-ionic-2-mongodb-node/
+
+// Models
+var Loom = mongoose.model('Loom', {
+    room_number: Number,
+    type: String,
+    beds: Number,
+    max_occupancy: Number,
+    cost_per_night: Number,
+    reserved: [
+        {
+            from: String,
+            to: String
+        }
+    ]
+});
+
+/*
+ * Generate some test data, if no records exist already
+ * MAKE SURE TO REMOVE THIS IN PROD ENVIRONMENT
+*/
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+Loom.remove({}, function(res){
+    console.log("removed records");
+});
+
+Loom.count({}, function(err, count){
+    console.log("Rooms: " + count);
+
+    if(count === 0){
+
+        var recordsToGenerate = 10;
+
+        var roomTypes = [
+            'standard',
+            'villa',
+            'penthouse',
+            'studio'
+        ];
+
+        // For testing purposes, all rooms will be booked out from:
+        // 18th May 2017 to 25th May 2017, and
+        // 29th Jan 2018 to 31 Jan 2018
+
+        for(var i = 0; i < recordsToGenerate; i++){
+            var newRoom = new Loom({
+                room_number: i,
+                type: roomTypes[getRandomInt(0,3)],
+                beds: 4,
+                max_occupancy: getRandomInt(1, 8),
+                cost_per_night: getRandomInt(50, 500),
+                reserved: [
+                    {from: '1970-01-01', to: '1970-01-02'},
+                    {from: '2017-04-18', to: '2017-04-23'},
+                    {from: '2018-01-29', to: '2018-01-30'}
+                ]
+            });
+
+            newRoom.save(function(err, doc){
+                console.log("Created test document: " + doc._id);
+            });
+        }
+
+    }
+});
+
+
+
+
+app.get('/LoomJSON', function(req, res){
+
+
+
+  Loom.find({
+        type: "standard",
+/*
+        beds: 4,
+        max_occupancy: {$gt: 1},
+        cost_per_night: {$gte: 1, $lte: 499},
+        reserved: {
+
+            //Check if any of the dates the room has been reserved for overlap with the requsted dates
+            $not: {
+              // $elemMatch: {from: {$lt: req.body.to.substring(0,10)}, to: {$gt: req.body.from.substring(0,10)}}
+
+            //  "2017-04-18"
+
+              $elemMatch: {from: {$lt: "2017-04-23"}, to: {$gt: "2017-04-18"}}
+
+
+            }
+
+        }
+
+        */
+    }, function(err, rooms){
+        if(err){
+            res.send(err);
+        } else {
+            res.json(rooms);
+        }
+    });
+
+
+
+});
 
 
 
