@@ -212,6 +212,7 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+/*
 Loom.remove({}, function(res){
     console.log("removed records");
 });
@@ -257,7 +258,7 @@ Loom.count({}, function(err, count){
 });
 
 
-
+*/
 
 app.get('/LoomJSON', function(req, res){
 
@@ -265,10 +266,13 @@ app.get('/LoomJSON', function(req, res){
 
   Loom.find({
         type: "standard",
-/*
+
         beds: 4,
-        max_occupancy: {$gt: 1},
-        cost_per_night: {$gte: 1, $lte: 499},
+
+        max_occupancy: {$gt: 0},
+
+        cost_per_night: {$gte: 0, $lte: 499},
+
         reserved: {
 
             //Check if any of the dates the room has been reserved for overlap with the requsted dates
@@ -277,14 +281,33 @@ app.get('/LoomJSON', function(req, res){
 
             //  "2017-04-18"
 
-              $elemMatch: {from: {$lt: "2017-04-23"}, to: {$gt: "2017-04-18"}}
+            //  $elemMatch: {from: {$lt: "2017-04-23"}, to: {$gt: "2017-04-18"}} // returns [] or an empty array
 
 
-            }
+/*      $elemMatch: {from: {$lt: "2011-04-23"}, to: {$gt: "2012-04-18"}}
+returns:
+  [{"_id":"5a0136e838561fef115d9c12","room_number":2,"type":"standard","beds":4,"max_occupancy":4,"cost_per_night":358,"__v":0,"reserved":[{"from":"1970-01-01","to":"1970-01-02","_id":"5a0136e838561fef115d9c15"},{"from":"2017-04-18","to":"2017-04-23","_id":"5a0136e838561fef115d9c14"},{"from":"2018-01-29","to":"2018-01-30","_id":"5a0136e838561fef115d9c13"}]},{"_id":"5a0136e838561fef115d9c22","room_number":6,"type":"standard","beds":4,"max_occupancy":6,"cost_per_night":89,"__v":0,"reserved":[{"from":"1970-01-01","to":"1970-01-02","_id":"5a0136e838561fef115d9c25"},{"from":"2017-04-18","to":"2017-04-23","_id":"5a0136e838561fef115d9c24"},{"from":"2018-01-29","to":"2018-01-30","_id":"5a0136e838561fef115d9c23"}]},{"_id":"5a0136e838561fef115d9c2a","room_number":8,"type":"standard","beds":4,"max_occupancy":3,"cost_per_night":218,"__v":0,"reserved":[{"from":"1970-01-01","to":"1970-01-02","_id":"5a0136e838561fef115d9c2d"},{"from":"2017-04-18","to":"2017-04-23","_id":"5a0136e838561fef115d9c2c"},{"from":"2018-01-29","to":"2018-01-30","_id":"5a0136e838561fef115d9c2b"}]},{"_id":"5a0136e838561fef115d9c26","room_number":7,"type":"standard","beds":4,"max_occupancy":3,"cost_per_night":128,"__v":0,"reserved":[{"from":"1970-01-01","to":"1970-01-02","_id":"5a0136e838561fef115d9c29"},{"from":"2017-04-18","to":"2017-04-23","_id":"5a0136e838561fef115d9c28"},{"from":"2018-01-29","to":"2018-01-30","_id":"5a0136e838561fef115d9c27"}]}]
+*/
 
-        }
+/*   $elemMatch: {from: {$lt: "2017-04-29"}, to: {$gt: "2017-04-24"}}
 
-        */
+returns 4 rooms:
+[{"_id":"5a0136e838561fef115d9c12","room_number":2,"type":"standard","beds":4,"max_occupancy":4,"cost_per_night":358,"__v":0,"reserved":[{"from":"1970-01-01","to":"1970-01-02","_id":"5a0136e838561fef115d9c15"},{"from":"2017-04-18","to":"2017-04-23","_id":"5a0136e838561fef115d9c14"},{"from":"2018-01-29","to":"2018-01-30","_id":"5a0136e838561fef115d9c13"}]},{"_id":"5a0136e838561fef115d9c22","room_number":6,"type":"standard","beds":4,"max_occupancy":6,"cost_per_night":89,"__v":0,"reserved":[{"from":"1970-01-01","to":"1970-01-02","_id":"5a0136e838561fef115d9c25"},{"from":"2017-04-18","to":"2017-04-23","_id":"5a0136e838561fef115d9c24"},{"from":"2018-01-29","to":"2018-01-30","_id":"5a0136e838561fef115d9c23"}]},{"_id":"5a0136e838561fef115d9c2a","room_number":8,"type":"standard","beds":4,"max_occupancy":3,"cost_per_night":218,"__v":0,"reserved":[{"from":"1970-01-01","to":"1970-01-02","_id":"5a0136e838561fef115d9c2d"},{"from":"2017-04-18","to":"2017-04-23","_id":"5a0136e838561fef115d9c2c"},{"from":"2018-01-29","to":"2018-01-30","_id":"5a0136e838561fef115d9c2b"}]},{"_id":"5a0136e838561fef115d9c26","room_number":7,"type":"standard","beds":4,"max_occupancy":3,"cost_per_night":128,"__v":0,"reserved":[{"from":"1970-01-01","to":"1970-01-02","_id":"5a0136e838561fef115d9c29"},{"from":"2017-04-18","to":"2017-04-23","_id":"5a0136e838561fef115d9c28"},{"from":"2018-01-29","to":"2018-01-30","_id":"5a0136e838561fef115d9c27"}]}]
+*/
+
+$elemMatch: {from: {$lt: "2017-04-24"}, to: {$gt: "2017-04-19"}}
+/* returns 0 rooms:
+[]
+
+What does a return of 0 rooms mean? Well it means that the 4 rooms are not available for reservation from 4-19-17 to 4-24-17.  4-24-17 is okay, but the days 4-19, 4-20,4-21,4-22, and 4-23 are already reserved for the rooms 
+*/
+
+
+          } // not
+
+        } //reserved
+
+
     }, function(err, rooms){
         if(err){
             res.send(err);
