@@ -191,10 +191,7 @@ app.get('/resFilteredJSON', function(req, res){
 // Models
 var Loom = mongoose.model('Loom', {
     room_number: Number,
-    type: String,
-    beds: Number,
-    max_occupancy: Number,
-    cost_per_night: Number,
+    roomstyle: String,
     reserved: [
         {
             from: String,
@@ -212,7 +209,9 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-/*
+
+
+
 Loom.remove({}, function(res){
     console.log("removed records");
 });
@@ -222,13 +221,15 @@ Loom.count({}, function(err, count){
 
     if(count === 0){
 
-        var recordsToGenerate = 10;
+        var recordsToGenerate = 40;
+
+        // enum: ['Standard Single', 'Superior Twin', 'Deluxe Double', 'Family Suite',]
 
         var roomTypes = [
-            'standard',
-            'villa',
-            'penthouse',
-            'studio'
+            'Standard Single',
+            'Superior Twin',
+            'Deluxe Double',
+            'Family Suite'
         ];
 
         // For testing purposes, all rooms will be booked out from:
@@ -236,18 +237,48 @@ Loom.count({}, function(err, count){
         // 29th Jan 2018 to 31 Jan 2018
 
         for(var i = 0; i < recordsToGenerate; i++){
+
+          if(i < 10){
             var newRoom = new Loom({
                 room_number: i,
-                type: roomTypes[getRandomInt(0,3)],
-                beds: 4,
-                max_occupancy: getRandomInt(1, 8),
-                cost_per_night: getRandomInt(50, 500),
+                roomstyle: roomTypes[0],
                 reserved: [
                     {from: '1970-01-01', to: '1970-01-02'},
                     {from: '2017-04-18', to: '2017-04-23'},
                     {from: '2018-01-29', to: '2018-01-30'}
                 ]
             });
+          } else if( i >= 10 && i <  20){
+            var newRoom = new Loom({
+                room_number: i,
+                roomstyle: roomTypes[1],
+                reserved: [
+                    {from: '1970-01-01', to: '1970-01-02'},
+                    {from: '2017-04-18', to: '2017-04-23'},
+                    {from: '2018-01-29', to: '2018-01-30'}
+                ]
+            });
+          } else if (i >= 21 && i < 30){
+            var newRoom = new Loom({
+                room_number: i,
+                roomstyle: roomTypes[2],
+                reserved: [
+                    {from: '1970-01-01', to: '1970-01-02'},
+                    {from: '2017-04-18', to: '2017-04-23'},
+                    {from: '2018-01-29', to: '2018-01-30'}
+                ]
+            });
+          } else if ( i >= 30){
+            var newRoom = new Loom({
+                room_number: i,
+                roomstyle: roomTypes[3],
+                reserved: [
+                    {from: '1970-01-01', to: '1970-01-02'},
+                    {from: '2017-04-18', to: '2017-04-23'},
+                    {from: '2018-01-29', to: '2018-01-30'}
+                ]
+            });
+          }
 
             newRoom.save(function(err, doc){
                 console.log("Created test document: " + doc._id);
@@ -258,7 +289,7 @@ Loom.count({}, function(err, count){
 });
 
 
-*/
+
 
 app.get('/LoomJSON', function(req, res){
 
@@ -299,7 +330,7 @@ $elemMatch: {from: {$lt: "2017-04-24"}, to: {$gt: "2017-04-19"}}
 /* returns 0 rooms:
 []
 
-What does a return of 0 rooms mean? Well it means that the 4 rooms are not available for reservation from 4-19-17 to 4-24-17.  4-24-17 is okay, but the days 4-19, 4-20,4-21,4-22, and 4-23 are already reserved for the rooms 
+What does a return of 0 rooms mean? Well it means that the 4 rooms are not available for reservation from 4-19-17 to 4-24-17.  4-24-17 is okay, but the days 4-19, 4-20,4-21,4-22, and 4-23 are already reserved for the rooms
 */
 
 
