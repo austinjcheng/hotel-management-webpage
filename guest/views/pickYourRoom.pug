@@ -1,0 +1,16 @@
+extends layoutNavBar
+//- comment testing
+block content
+  h1 Pick Your Room
+  h1 #{title} 
+  ul.list-group
+  each room, i in roomsAvailable
+    li.list-group-item
+      p RoomType: #{room.roomstyle}
+      //- a(href="/reservations/"+reservation._id)= reservation.roomstyle  
+      p RoomNumber: #{room.room_number}
+  
+
+
+
+      

@@ -7,6 +7,9 @@ let ReservationFromModel = require('../models/reservation');
 let UserFromModel = require('../models/user');
 
 
+let LoomFromModel = require('../models/loom');
+
+
 
 // Add Route
 // Add ensureAuthenticated as a 2nd parameter to protect the add route for logged in users only
@@ -151,6 +154,40 @@ router.get('/:id', function(req, res){ // colon is placeholder of anything. anyt
          });
       });
     });
+});
+
+
+
+router.post('/lomJS', function(req,res){
+  //ReservationFromModel.findById(req.params.id, function(err, reservationResponse){
+console.log("enddate " + req.body.endDate); // check in terminal
+console.log("startDate " + req.body.startDate); // check in terminal
+
+  LoomFromModel.find({
+        roomstyle: req.body.roomstyle,
+        reserved: {
+            //Check if any of the dates the room has been reserved for overlap with the requsted dates
+            $not: {
+            //  $elemMatch: {from: {$lt: "2017-04-22"}, to: {$gt: "2017-04-20"}}
+
+          $elemMatch: {from: {$lt: req.body.endDate}, to: {$gt: req.body.startDate}}
+          } // not
+        } //reserved
+
+    }, function(err, loom){
+        if(err){
+            res.send(err);
+        } else {
+          //  res.json(loom);
+
+               res.render('pickYourRoom',{
+                 title: 'List of available rooms',
+                 roomsAvailable: loom
+               });
+
+        }
+    });
+
 });
 
 

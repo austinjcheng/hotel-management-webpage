@@ -149,7 +149,7 @@ app.use('/users', users);
 let UserFromModel = require('./models/user');
 let ReservationFromModel = require('./models/reservation');
 let RoomFromModel = require('./models/room');
-
+let LoomFromModel = require('./models/loom')
 
 
 app.get('/userJSON', function(req, res){
@@ -188,22 +188,14 @@ app.get('/resFilteredJSON', function(req, res){
 
 // https://www.joshmorony.com/building-a-hotel-booking-app-with-ionic-2-mongodb-node/
 
-// Models
-var Loom = mongoose.model('Loom', {
-    room_number: Number,
-    roomstyle: String,
-    reserved: [
-        {
-            from: String,
-            to: String
-        }
-    ]
-});
+
 
 /*
  * Generate some test data, if no records exist already
  * MAKE SURE TO REMOVE THIS IN PROD ENVIRONMENT
 */
+
+/*
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -212,11 +204,11 @@ function getRandomInt(min, max) {
 
 
 
-Loom.remove({}, function(res){
+LoomFromModel.remove({}, function(res){
     console.log("removed records");
 });
 
-Loom.count({}, function(err, count){
+LoomFromModel.count({}, function(err, count){
     console.log("Rooms: " + count);
 
     if(count === 0){
@@ -236,46 +228,46 @@ Loom.count({}, function(err, count){
         // 18th May 2017 to 25th May 2017, and
         // 29th Jan 2018 to 31 Jan 2018
 
-        for(var i = 0; i < recordsToGenerate; i++){
+        for(var i = 1; i <= recordsToGenerate + 1; i++){
 
           if(i < 10){
-            var newRoom = new Loom({
+            var newRoom = new LoomFromModel({
                 room_number: i,
                 roomstyle: roomTypes[0],
                 reserved: [
-                    {from: '1970-01-01', to: '1970-01-02'},
-                    {from: '2017-04-18', to: '2017-04-23'},
-                    {from: '2018-01-29', to: '2018-01-30'}
+                    {from: '8/22/2017', to: '8/26/2017'},
+                    {from: '11/22/2017', to: '11/26/2017'},
+                    {from: '1/2/2018', to: '1/6/2018'}
                 ]
             });
           } else if( i >= 10 && i <  20){
-            var newRoom = new Loom({
+            var newRoom = new LoomFromModel({
                 room_number: i,
                 roomstyle: roomTypes[1],
                 reserved: [
-                    {from: '1970-01-01', to: '1970-01-02'},
-                    {from: '2017-04-18', to: '2017-04-23'},
-                    {from: '2018-01-29', to: '2018-01-30'}
+                {from: '8/22/2017', to: '8/26/2017'},
+                {from: '11/22/2017', to: '11/26/2017'},
+                {from: '1/2/2018', to: '1/6/2018'}
                 ]
             });
           } else if (i >= 21 && i < 30){
-            var newRoom = new Loom({
+            var newRoom = new LoomFromModel({
                 room_number: i,
                 roomstyle: roomTypes[2],
                 reserved: [
-                    {from: '1970-01-01', to: '1970-01-02'},
-                    {from: '2017-04-18', to: '2017-04-23'},
-                    {from: '2018-01-29', to: '2018-01-30'}
+                {from: '8/22/2017', to: '8/26/2017'},
+                {from: '11/22/2017', to: '11/26/2017'},
+                {from: '1/2/2018', to: '1/6/2018'}
                 ]
             });
           } else if ( i >= 30){
-            var newRoom = new Loom({
+            var newRoom = new LoomFromModel({
                 room_number: i,
                 roomstyle: roomTypes[3],
                 reserved: [
-                    {from: '1970-01-01', to: '1970-01-02'},
-                    {from: '2017-04-18', to: '2017-04-23'},
-                    {from: '2018-01-29', to: '2018-01-30'}
+                {from: '8/22/2017', to: '8/26/2017'},
+                {from: '11/22/2017', to: '11/26/2017'},
+                {from: '1/2/2018', to: '1/6/2018'}
                 ]
             });
           }
@@ -290,43 +282,34 @@ Loom.count({}, function(err, count){
 
 
 
+*/
+
+
 
 app.get('/LoomJSON', function(req, res){
 
 
 
-  Loom.find({
-        type: "standard",
+  LoomFromModel.find({
+        roomstyle: "Deluxe Double",
 
-        beds: 4,
+    //    beds: 4,
 
-        max_occupancy: {$gt: 0},
+      //  max_occupancy: {$gt: 0},
 
-        cost_per_night: {$gte: 0, $lte: 499},
+    //    cost_per_night: {$gte: 0, $lte: 499},
 
         reserved: {
 
             //Check if any of the dates the room has been reserved for overlap with the requsted dates
             $not: {
-              // $elemMatch: {from: {$lt: req.body.to.substring(0,10)}, to: {$gt: req.body.from.substring(0,10)}}
-
-            //  "2017-04-18"
-
-            //  $elemMatch: {from: {$lt: "2017-04-23"}, to: {$gt: "2017-04-18"}} // returns [] or an empty array
 
 
-/*      $elemMatch: {from: {$lt: "2011-04-23"}, to: {$gt: "2012-04-18"}}
-returns:
-  [{"_id":"5a0136e838561fef115d9c12","room_number":2,"type":"standard","beds":4,"max_occupancy":4,"cost_per_night":358,"__v":0,"reserved":[{"from":"1970-01-01","to":"1970-01-02","_id":"5a0136e838561fef115d9c15"},{"from":"2017-04-18","to":"2017-04-23","_id":"5a0136e838561fef115d9c14"},{"from":"2018-01-29","to":"2018-01-30","_id":"5a0136e838561fef115d9c13"}]},{"_id":"5a0136e838561fef115d9c22","room_number":6,"type":"standard","beds":4,"max_occupancy":6,"cost_per_night":89,"__v":0,"reserved":[{"from":"1970-01-01","to":"1970-01-02","_id":"5a0136e838561fef115d9c25"},{"from":"2017-04-18","to":"2017-04-23","_id":"5a0136e838561fef115d9c24"},{"from":"2018-01-29","to":"2018-01-30","_id":"5a0136e838561fef115d9c23"}]},{"_id":"5a0136e838561fef115d9c2a","room_number":8,"type":"standard","beds":4,"max_occupancy":3,"cost_per_night":218,"__v":0,"reserved":[{"from":"1970-01-01","to":"1970-01-02","_id":"5a0136e838561fef115d9c2d"},{"from":"2017-04-18","to":"2017-04-23","_id":"5a0136e838561fef115d9c2c"},{"from":"2018-01-29","to":"2018-01-30","_id":"5a0136e838561fef115d9c2b"}]},{"_id":"5a0136e838561fef115d9c26","room_number":7,"type":"standard","beds":4,"max_occupancy":3,"cost_per_night":128,"__v":0,"reserved":[{"from":"1970-01-01","to":"1970-01-02","_id":"5a0136e838561fef115d9c29"},{"from":"2017-04-18","to":"2017-04-23","_id":"5a0136e838561fef115d9c28"},{"from":"2018-01-29","to":"2018-01-30","_id":"5a0136e838561fef115d9c27"}]}]
-*/
 
-/*   $elemMatch: {from: {$lt: "2017-04-29"}, to: {$gt: "2017-04-24"}}
 
-returns 4 rooms:
-[{"_id":"5a0136e838561fef115d9c12","room_number":2,"type":"standard","beds":4,"max_occupancy":4,"cost_per_night":358,"__v":0,"reserved":[{"from":"1970-01-01","to":"1970-01-02","_id":"5a0136e838561fef115d9c15"},{"from":"2017-04-18","to":"2017-04-23","_id":"5a0136e838561fef115d9c14"},{"from":"2018-01-29","to":"2018-01-30","_id":"5a0136e838561fef115d9c13"}]},{"_id":"5a0136e838561fef115d9c22","room_number":6,"type":"standard","beds":4,"max_occupancy":6,"cost_per_night":89,"__v":0,"reserved":[{"from":"1970-01-01","to":"1970-01-02","_id":"5a0136e838561fef115d9c25"},{"from":"2017-04-18","to":"2017-04-23","_id":"5a0136e838561fef115d9c24"},{"from":"2018-01-29","to":"2018-01-30","_id":"5a0136e838561fef115d9c23"}]},{"_id":"5a0136e838561fef115d9c2a","room_number":8,"type":"standard","beds":4,"max_occupancy":3,"cost_per_night":218,"__v":0,"reserved":[{"from":"1970-01-01","to":"1970-01-02","_id":"5a0136e838561fef115d9c2d"},{"from":"2017-04-18","to":"2017-04-23","_id":"5a0136e838561fef115d9c2c"},{"from":"2018-01-29","to":"2018-01-30","_id":"5a0136e838561fef115d9c2b"}]},{"_id":"5a0136e838561fef115d9c26","room_number":7,"type":"standard","beds":4,"max_occupancy":3,"cost_per_night":128,"__v":0,"reserved":[{"from":"1970-01-01","to":"1970-01-02","_id":"5a0136e838561fef115d9c29"},{"from":"2017-04-18","to":"2017-04-23","_id":"5a0136e838561fef115d9c28"},{"from":"2018-01-29","to":"2018-01-30","_id":"5a0136e838561fef115d9c27"}]}]
-*/
+//$elemMatch: {from: {$lt: "2017-04-24"}, to: {$gt: "2017-04-19"}}
+$elemMatch: {from: {$lt: req.body.enddate}, to: {$gt: req.body.startdate}}
 
-$elemMatch: {from: {$lt: "2017-04-24"}, to: {$gt: "2017-04-19"}}
 /* returns 0 rooms:
 []
 
