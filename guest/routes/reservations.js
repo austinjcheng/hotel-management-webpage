@@ -179,12 +179,16 @@ console.log("startDate " + req.body.startDate); // check in terminal
             res.send(err);
         } else {
           //  res.json(loom);
-
+          console.log(loom.length);
+          if(loom.length == 0){
+            req.flash('danger', 'No rooms available for the specified dates. Please select different dates.');
+            res.redirect('/reservations/add');
+          } else{
                res.render('pickYourRoom',{
                  title: 'List of available rooms',
                  roomsAvailable: loom
                });
-
+            }
         }
     });
 
