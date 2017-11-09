@@ -1,38 +1,36 @@
 let mongoose = require('mongoose');
-var moment = require('moment');
+let moment = require('moment');
+
+var Schema = mongoose.Schema;
 
 // Reservation Schema
 let reservationSchema = mongoose.Schema({
-  guest: {
-    type: String,
-    required: true
-  },
   roomstyle: {
     type: String,
     required: true
   },
+  guest: {
+    type: Schema.ObjectId, ref: 'User',
+    required: true
+  },
   startDate: {
-    type: Date,
-    require: true
+    type: String,
+    required: true
   },
   endDate: {
-    type: Date,
-    require: true
+    type: String,
+    required: true
+  },
+  roomNum: {
+    type: Number,
+    required: false
+  },
+  processed: {
+    type: String,
+    required: false
   }
 });
 
 
-reservationSchema
-.virtual('start_date_formatted')
-.get(function () {
-  return moment(this.startDate).format('MMMM Do, YYYY');
-});
-
-
-reservationSchema
-.virtual('end_date_formatted')
-.get(function () {
-  return moment(this.endDate).format('MMMM Do, YYYY');
-});
 
 let Reservation = module.exports = mongoose.model('Reservation', reservationSchema);

@@ -9,18 +9,20 @@ let EmployeeFromModel = require('../models/employee');
 
 // Room route
 router.get('/rooms', ensureAuthenticated, function(req,res){
-   ReservationFromModel.find({}, function(err, reservationsVar){ // find all reservations with an empty curly brace {}
+  //http://mongoosejs.com/docs/2.7.x/docs/populate.html
+   ReservationFromModel.find({}).sort([['startDate', 'ascending']]).populate('guest', ['username']).exec(function(err, reservationsVar){ // find all reservations with an empty curly brace {}
       if(err){
         console.log(err);
       } else {
         // render the template
+        console.log('3434');
         res.render('rooms', {
           title: 'Rooms Reserved',
           reservations: reservationsVar
         });
     }
   });
-})
+});
 
 
 // Add Route
@@ -50,8 +52,8 @@ router.post('/add', function(req, res){
 
        let reservation = ReservationFromModel();
        reservation.roomstyle = req.body.roomstyle;
-       //reservation.guest = req.user._id;
-       reservation.guest = req.user.name;
+       reservation.guest = req.user._id;
+       //reservation.guest = req.user.name;
 
        reservation.save(function(err){
          if(err){

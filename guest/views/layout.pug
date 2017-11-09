@@ -22,11 +22,10 @@ html(lang='en')
             li.active
               a(href='/') Home
             li
-              a(href='/reservations/add') Rooms
-            li
-              a(href='#') Page 2
-            li
-              a(href='#') Page 3436
+              a(href='/reservations/add') Add Reservation
+            if user
+              li
+                a(href='/reservations/checkYourReservation') Check Your Reservation
           ul.nav.navbar-nav.navbar-right
               if user
                 li

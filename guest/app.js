@@ -19,6 +19,8 @@ mongoose.connect(mongoDB, {
 });
 */
 
+mongoose.Promise = global.Promise;
+
 mongoose.connect(config.database, {
   useMongoClient: true
 });
@@ -115,31 +117,126 @@ app.get('/', function(req, res){
 res.render('layout');
 });
 
-
-
-/* -----
-// Home route
-app.get('/', function(req,res){
-   ReservationFromModel.find({}, function(err, reservationsVar){ // find all reservations with an empty curly brace {}
-      if(err){
-        console.log(err);
-      } else {
-        // render the template
-        res.render('index', {
-          title: 'Rooms Reserved',
-          reservations: reservationsVar
-        });
-    }
-  });
-})
-
-*/
 // Route files
 let reservations = require('./routes/reservations'); // Include our reservations.js file from 'routes' folder.
 app.use('/reservations', reservations); // For anything that goes to /reservations, it's gonna go to the reservation.js file
 
 let users = require('./routes/users');
 app.use('/users', users);
+
+
+let UserFromModel = require('./models/user');
+let ReservationFromModel = require('./models/reservation');
+let RoomFromModel = require('./models/room');
+
+
+// https://www.joshmorony.com/building-a-hotel-booking-app-with-ionic-2-mongodb-node/
+
+
+
+/*
+ * Generate some test data, if no records exist already
+ * MAKE SURE TO REMOVE THIS IN PROD ENVIRONMENT
+*/
+
+/*
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
+
+
+RoomFromModel.remove({}, function(res){
+    console.log("removed records");
+});
+
+RoomFromModel.count({}, function(err, count){
+    console.log("Rooms: " + count);
+
+    if(count === 0){
+
+        var recordsToGenerate = 40;
+
+        // enum: ['Standard Single', 'Superior Twin', 'Deluxe Double', 'Family Suite',]
+
+        var roomTypes = [
+            'Standard Single',
+            'Superior Twin',
+            'Deluxe Double',
+            'Family Suite'
+        ];
+
+        // For testing purposes, all rooms will be booked out from:
+        // 18th May 2017 to 25th May 2017, and
+        // 29th Jan 2018 to 31 Jan 2018
+
+        for(var i = 1; i <= recordsToGenerate + 1; i++){
+
+          if(i < 10){
+            var newRoom = new RoomFromModel({
+                room_number: i,
+                roomstyle: roomTypes[0],
+                reserved: [
+                    {from: '8/22/2017', to: '8/26/2017'},
+                    {from: '11/22/2017', to: '11/26/2017'},
+                    {from: '1/2/2018', to: '1/6/2018'}
+                ]
+            });
+          } else if( i >= 10 && i <  20){
+            var newRoom = new RoomFromModel({
+                room_number: i,
+                roomstyle: roomTypes[1],
+                reserved: [
+                {from: '8/22/2017', to: '8/26/2017'},
+                {from: '11/22/2017', to: '11/26/2017'},
+                {from: '1/2/2018', to: '1/6/2018'}
+                ]
+            });
+          } else if (i >= 21 && i < 30){
+            var newRoom = new RoomFromModel({
+                room_number: i,
+                roomstyle: roomTypes[2],
+                reserved: [
+                {from: '8/22/2017', to: '8/26/2017'},
+                {from: '11/22/2017', to: '11/26/2017'},
+                {from: '1/2/2018', to: '1/6/2018'}
+                ]
+            });
+          } else if ( i >= 30){
+            var newRoom = new RoomFromModel({
+                room_number: i,
+                roomstyle: roomTypes[3],
+                reserved: [
+                {from: '8/22/2017', to: '8/26/2017'},
+                {from: '11/22/2017', to: '11/26/2017'},
+                {from: '1/2/2018', to: '1/6/2018'}
+                ]
+            });
+          }
+
+            newRoom.save(function(err, doc){
+                console.log("Created test document: " + doc._id);
+            });
+        }
+
+    }
+});
+
+*/
+
+
+
+
+function ensureAuthenticated(req, res, next){
+  if(req.isAuthenticated()){ // we can call req.isAuthenticated() because of passport middleware
+    return next();
+  } else{
+    req.flash('danger', 'Please login');
+    res.redirect('/users/login');
+  }
+}
 
 // Start server
 app.listen(3002, function(){
