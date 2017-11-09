@@ -117,27 +117,6 @@ app.get('/', function(req, res){
 res.render('layout');
 });
 
-
-
-
-
-/* -----
-// Home route
-app.get('/', function(req,res){
-   ReservationFromModel.find({}, function(err, reservationsVar){ // find all reservations with an empty curly brace {}
-      if(err){
-        console.log(err);
-      } else {
-        // render the template
-        res.render('index', {
-          title: 'Rooms Reserved',
-          reservations: reservationsVar
-        });
-    }
-  });
-})
-
-*/
 // Route files
 let reservations = require('./routes/reservations'); // Include our reservations.js file from 'routes' folder.
 app.use('/reservations', reservations); // For anything that goes to /reservations, it's gonna go to the reservation.js file
@@ -149,41 +128,6 @@ app.use('/users', users);
 let UserFromModel = require('./models/user');
 let ReservationFromModel = require('./models/reservation');
 let RoomFromModel = require('./models/room');
-let LoomFromModel = require('./models/loom')
-
-
-app.get('/testUpdateRoom', function(req, res){
-  //res.send('hi userJSON');
-  LoomFromModel.findOneAndUpdate({room_number: 10},{$push : {"reserved" : {from: '3/22/3017', to: '11/26/3017'}}},function(e,docs){
-       res.json(docs);
-   });
-});
-
-
-app.get('/reservationJSON', function(req, res){
-
-   ReservationFromModel.find({},{},function(e,docs){
-       res.json(docs);
-   });
-});
-
-app.get('/roomJSON', function(req, res){
-
-   RoomFromModel.find({},{},function(e,docs){
-       res.json(docs);
-   });
-});
-
-app.get('/resFilteredJSON', function(req, res){
-
-  ReservationFromModel.find(
-  //  {roomstyle: 'Standard Single'}
-  {endDate:  {"$lte": new Date("2017-11-11")} }
-
-  ,function(e,docs){
-      res.json(docs);
-  });
-});
 
 
 // https://www.joshmorony.com/building-a-hotel-booking-app-with-ionic-2-mongodb-node/
@@ -204,11 +148,11 @@ function getRandomInt(min, max) {
 
 
 
-LoomFromModel.remove({}, function(res){
+RoomFromModel.remove({}, function(res){
     console.log("removed records");
 });
 
-LoomFromModel.count({}, function(err, count){
+RoomFromModel.count({}, function(err, count){
     console.log("Rooms: " + count);
 
     if(count === 0){
@@ -231,7 +175,7 @@ LoomFromModel.count({}, function(err, count){
         for(var i = 1; i <= recordsToGenerate + 1; i++){
 
           if(i < 10){
-            var newRoom = new LoomFromModel({
+            var newRoom = new RoomFromModel({
                 room_number: i,
                 roomstyle: roomTypes[0],
                 reserved: [
@@ -241,7 +185,7 @@ LoomFromModel.count({}, function(err, count){
                 ]
             });
           } else if( i >= 10 && i <  20){
-            var newRoom = new LoomFromModel({
+            var newRoom = new RoomFromModel({
                 room_number: i,
                 roomstyle: roomTypes[1],
                 reserved: [
@@ -251,7 +195,7 @@ LoomFromModel.count({}, function(err, count){
                 ]
             });
           } else if (i >= 21 && i < 30){
-            var newRoom = new LoomFromModel({
+            var newRoom = new RoomFromModel({
                 room_number: i,
                 roomstyle: roomTypes[2],
                 reserved: [
@@ -261,7 +205,7 @@ LoomFromModel.count({}, function(err, count){
                 ]
             });
           } else if ( i >= 30){
-            var newRoom = new LoomFromModel({
+            var newRoom = new RoomFromModel({
                 room_number: i,
                 roomstyle: roomTypes[3],
                 reserved: [
@@ -280,59 +224,10 @@ LoomFromModel.count({}, function(err, count){
     }
 });
 
-
 */
 
 
 
-
-app.get('/LoomJSON', function(req, res){
-
-
-
-  LoomFromModel.find({
-        roomstyle: "Deluxe Double",
-
-    //    beds: 4,
-
-      //  max_occupancy: {$gt: 0},
-
-    //    cost_per_night: {$gte: 0, $lte: 499},
-
-        reserved: {
-
-            //Check if any of the dates the room has been reserved for overlap with the requsted dates
-            $not: {
-
-
-
-
-//$elemMatch: {from: {$lt: "2017-04-24"}, to: {$gt: "2017-04-19"}}
-$elemMatch: {from: {$lt: req.body.enddate}, to: {$gt: req.body.startdate}}
-
-/* returns 0 rooms:
-[]
-
-What does a return of 0 rooms mean? Well it means that the 4 rooms are not available for reservation from 4-19-17 to 4-24-17.  4-24-17 is okay, but the days 4-19, 4-20,4-21,4-22, and 4-23 are already reserved for the rooms
-*/
-
-
-          } // not
-
-        } //reserved
-
-
-    }, function(err, rooms){
-        if(err){
-            res.send(err);
-        } else {
-            res.json(rooms);
-        }
-    });
-
-
-
-});
 
 function ensureAuthenticated(req, res, next){
   if(req.isAuthenticated()){ // we can call req.isAuthenticated() because of passport middleware

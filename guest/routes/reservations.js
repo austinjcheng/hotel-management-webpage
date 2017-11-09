@@ -7,7 +7,7 @@ let ReservationFromModel = require('../models/reservation');
 let UserFromModel = require('../models/user');
 
 
-let LoomFromModel = require('../models/loom');
+let RoomFromModel = require('../models/room');
 
 
 
@@ -53,7 +53,7 @@ router.post('/add', function(req, res){
        reservation.endDate = req.body.endDate;
 
 
-         LoomFromModel.findOneAndUpdate({
+         RoomFromModel.findOneAndUpdate({
                roomstyle: req.body.roomstyle,
                reserved: {
                    //Check if any of the dates the room has been reserved for overlap with the requsted dates
@@ -64,23 +64,22 @@ router.post('/add', function(req, res){
                  } // not
                } //reserved
 
-           }, {$push : {"reserved" : {from: req.body.startDate, to: req.body.endDate}}}, function(err, loom){
+           }, {$push : {"reserved" : {from: req.body.startDate, to: req.body.endDate}}}, function(err, room){
                if(err){
                    res.send(err);
                } else {
-                 //  res.json(loom);
-                 //console.log(loom);
-                 if(loom == null){
+
+                 if(room == null){
                    req.flash('danger', 'Your specified room and reservation dates are not available.');
                    res.redirect('/reservations/add');
                  } else{
 
-                   //console.log(loom._id);
-                   console.log('Room Num: ' + loom.room_number);
+                   //console.log(room._id);
+                   console.log('Room Num: ' + room.room_number);
 
 
 
-                   reservation.roomNum = loom.room_number;
+                   reservation.roomNum = room.room_number;
 
                    reservation.save(function(err){
                      if(err){
@@ -227,64 +226,6 @@ router.get('/:id', function(req, res){ // colon is placeholder of anything. anyt
 */
 
 
-router.post('/lomJS', function(req,res){
-  //ReservationFromModel.findById(req.params.id, function(err, reservationResponse){
-console.log("enddate " + req.body.endDate); // check in terminal
-console.log("startDate " + req.body.startDate); // check in terminal
-
-  LoomFromModel.find({
-        roomstyle: req.body.roomstyle,
-        reserved: {
-            //Check if any of the dates the room has been reserved for overlap with the requsted dates
-            $not: {
-            //  $elemMatch: {from: {$lt: "2017-04-22"}, to: {$gt: "2017-04-20"}}
-
-          $elemMatch: {from: {$lt: req.body.endDate}, to: {$gt: req.body.startDate}}
-          } // not
-        } //reserved
-
-    }, function(err, loom){
-        if(err){
-            res.send(err);
-        } else {
-          //  res.json(loom);
-          console.log(loom.length);
-          if(loom.length == 0){
-            req.flash('danger', 'No rooms available for the specified dates. Please select different dates.');
-            res.redirect('/reservations/add');
-          } else{
-               res.render('pickYourRoom',{
-                 title: 'List of available rooms',
-                 roomsAvailable: loom
-               });
-            }
-        }
-    }); // find
-
-});
-
-
-/*
-
-/*
-       let reservation = ReservationFromModel();
-       reservation.roomstyle = req.body.roomstyle;
-       reservation.guest = req.user._id;
-      // reservation.guest = req.user.name;
-       reservation.startDate = req.body.from;
-       reservation.endDate = req.body.to;
-
-       reservation.save(function(err){
-         if(err){
-           console.log(err);
-           return;
-         } else {
-           req.flash('success', 'Reservation added');
-           res.redirect('/');
-         }
-       });
-
-       */
 
 
 

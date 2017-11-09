@@ -1,29 +1,15 @@
 let mongoose = require('mongoose');
-var moment = require('moment');
+let moment = require('moment');
 
 var Schema = mongoose.Schema;
 
-let roomSchema = mongoose.Schema({
-/*
-RoomStyle: Link to RoomStyle
-RoomNumber: Integer,
-isAvailable: Boolean
-*/
+var RoomSchema = mongoose.Schema ({
+    room_number: Number,
+    roomstyle: String,
+    reserved: [{
+      from: String,
+      to: String
+    }]
+});
 
-roomStyle: {
-     type: String,
-     required: true
-    // enum: ['Standard Single', 'Superior Twin', 'Deluxe Double', 'Family Suite',]
-  }
-  ,
-
-    reserved: [
-         {
-             from: String,
-             to: String
-         }
-     ]
-
-})
-
-let Room = module.exports = mongoose.model('Room', roomSchema);
+let Room = module.exports = mongoose.model('Room', RoomSchema);
