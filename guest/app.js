@@ -152,13 +152,13 @@ let RoomFromModel = require('./models/room');
 let LoomFromModel = require('./models/loom')
 
 
-app.get('/userJSON', function(req, res){
+app.get('/testUpdateRoom', function(req, res){
   //res.send('hi userJSON');
-
-   UserFromModel.find({},{},function(e,docs){
+  LoomFromModel.findOneAndUpdate({room_number: 10},{$push : {"reserved" : {from: '3/22/3017', to: '11/26/3017'}}},function(e,docs){
        res.json(docs);
    });
 });
+
 
 app.get('/reservationJSON', function(req, res){
 
@@ -195,7 +195,7 @@ app.get('/resFilteredJSON', function(req, res){
  * MAKE SURE TO REMOVE THIS IN PROD ENVIRONMENT
 */
 
-/*
+
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -282,7 +282,7 @@ LoomFromModel.count({}, function(err, count){
 
 
 
-*/
+
 
 
 
@@ -334,7 +334,14 @@ What does a return of 0 rooms mean? Well it means that the 4 rooms are not avail
 
 });
 
-
+function ensureAuthenticated(req, res, next){
+  if(req.isAuthenticated()){ // we can call req.isAuthenticated() because of passport middleware
+    return next();
+  } else{
+    req.flash('danger', 'Please login');
+    res.redirect('/users/login');
+  }
+}
 
 // Start server
 app.listen(3002, function(){

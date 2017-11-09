@@ -65,9 +65,7 @@ html(lang='en')
             li
               a(href='/reservations/add') Add reservation
             li
-              a(href='#') Page 2
-            li
-              a(href='#') Page 3dfdffd
+              a(href='/reservations/checkYourReservation') Check Your Reservation
           ul.nav.navbar-nav.navbar-right
             if user
               li
@@ -93,9 +91,9 @@ html(lang='en')
           h1 #{title}
           
           
-    //-form(method='POST', action='/reservations/add')
-    form(method='POST', action='/reservations/lomJS')
-  
+    //-form(method='POST', action='/reservations/lomJS')
+    form(method='POST', action='/reservations/add')
+
       
 
       

@@ -22,17 +22,10 @@ html(lang='en')
             li.active
               a(href='/') Home
             li
-              a(href='/reservations/add') Rooms
-            li
-              a(href='/userJSON') userJSON
-            li
-              a(href='/reservationJSON') reservationJSON
-            li
-              a(href='/roomJSON') roomJSON
-            li 
-              a(href='/resFilteredJSON') resFilteredJSON
-            li
-              a(href='/LoomJSON') LoomJSON
+              a(href='/reservations/add') Add Reservation
+            if user
+              li
+                a(href='/reservations/checkYourReservation') Check Your Reservation
           ul.nav.navbar-nav.navbar-right
               if user
                 li

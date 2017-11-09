@@ -22,7 +22,7 @@ let reservationSchema = mongoose.Schema({
     required: true
   },
   roomNum: {
-    type: Schema.ObjectId, ref: 'Room',
+    type: Number,
     required: false
   },
   processed: {
@@ -30,5 +30,7 @@ let reservationSchema = mongoose.Schema({
     required: false
   }
 });
+
+
 
 let Reservation = module.exports = mongoose.model('Reservation', reservationSchema);

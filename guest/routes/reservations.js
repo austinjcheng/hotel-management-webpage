@@ -14,7 +14,6 @@ let LoomFromModel = require('../models/loom');
 // Add Route
 // Add ensureAuthenticated as a 2nd parameter to protect the add route for logged in users only
 router.get('/add', ensureAuthenticated, function(req, res){
-
   res.render('add_reservation', {
     title: 'Add Reservation'
   });
@@ -53,20 +52,89 @@ router.post('/add', function(req, res){
        reservation.startDate = req.body.startDate;
        reservation.endDate = req.body.endDate;
 
-       reservation.save(function(err){
-         if(err){
-           console.log(err);
-           return;
-         } else {
-           req.flash('success', 'Reservation added');
-           res.redirect('/');
-         }
-       });
+
+         LoomFromModel.findOneAndUpdate({
+               roomstyle: req.body.roomstyle,
+               reserved: {
+                   //Check if any of the dates the room has been reserved for overlap with the requsted dates
+                   $not: {
+                   //  $elemMatch: {from: {$lt: "2017-04-22"}, to: {$gt: "2017-04-20"}}
+
+                 $elemMatch: {from: {$lt: req.body.endDate}, to: {$gt: req.body.startDate}}
+                 } // not
+               } //reserved
+
+           }, {$push : {"reserved" : {from: req.body.startDate, to: req.body.endDate}}}, function(err, loom){
+               if(err){
+                   res.send(err);
+               } else {
+                 //  res.json(loom);
+                 //console.log(loom);
+                 if(loom == null){
+                   req.flash('danger', 'Your specified room and reservation dates are not available.');
+                   res.redirect('/reservations/add');
+                 } else{
+
+                   //console.log(loom._id);
+                   console.log('Room Num: ' + loom.room_number);
+
+
+
+                   reservation.roomNum = loom.room_number;
+
+                   reservation.save(function(err){
+                     if(err){
+                       console.log(err);
+                       return;
+                     } else {
+
+
+
+                       req.flash('success', 'Reservation added');
+                  //   res.redirect('/');
+                   //res.render('checkYourRsvp');
+                   res.redirect('/reservations/checkYourReservation');
+                 } // else
+               }); // reservation.save(func..)
+
+           } // else
+
+
      }
 
+    }); // end of find
+  }
+});
 
+
+
+// Room route
+router.get('/checkYourReservation', ensureAuthenticated, function(req,res){
+
+
+  //console.log('777');
+  //console.log(req.user.name);
+   ReservationFromModel.
+   find({guest: req.user}).
+   sort([['startDate', 'ascending']]).
+   populate('user').exec(function(err, reservationsVar){ //
+      if(err){
+        console.log(err);
+      } else {
+
+      //  console.log(req.user.username);
+
+        res.render('checkYourRsvp', {
+          title: 'Your Rooms Reserved',
+          reservations: reservationsVar,
+          guestName: req.user.username
+        });
+    }
+  });
 
 });
+
+
 
 // Load Edit Form
 router.get('/edit/:id', ensureAuthenticated, function(req, res){ // colon is placeholder of anything. anything in this case, is the id.
@@ -143,7 +211,7 @@ router.delete('/:id', function(req, res){
 });
 
 
-
+/*
 // Get Single Reservation
 router.get('/:id', function(req, res){ // colon is placeholder of anything. anything in this case, is the id.
     ReservationFromModel.findById(req.params.id, function(err, reservationResponse){
@@ -156,6 +224,7 @@ router.get('/:id', function(req, res){ // colon is placeholder of anything. anyt
     });
 });
 
+*/
 
 
 router.post('/lomJS', function(req,res){
@@ -190,9 +259,33 @@ console.log("startDate " + req.body.startDate); // check in terminal
                });
             }
         }
-    });
+    }); // find
 
 });
+
+
+/*
+
+/*
+       let reservation = ReservationFromModel();
+       reservation.roomstyle = req.body.roomstyle;
+       reservation.guest = req.user._id;
+      // reservation.guest = req.user.name;
+       reservation.startDate = req.body.from;
+       reservation.endDate = req.body.to;
+
+       reservation.save(function(err){
+         if(err){
+           console.log(err);
+           return;
+         } else {
+           req.flash('success', 'Reservation added');
+           res.redirect('/');
+         }
+       });
+
+       */
+
 
 
 

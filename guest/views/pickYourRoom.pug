@@ -1,16 +1,17 @@
 extends layoutNavBar
 //- comment testing
 block content
-  if roomsAvailble    
-  h1 Rooms available:
-  ul.list-group
-  each room, i in roomsAvailable
-    li.list-group-item
-      p RoomType: #{room.roomstyle}
-      //- a(href="/reservations/"+reservation._id)= reservation.roomstyle  
-      p RoomNumber: #{room.room_number}
-  else
-      h1 None
+  h1 Pick your room
+  form(method='POST' action='/reservations/addWithRoom')
+    div.form-group
+      label(for='room') room:
+      select#room.form-control(type='select', placeholder='Select room' name='room' required='true' )
+        for room in roomsAvailable
+          if room
+            option(value=room) #{room.room_number}
+      button.btn.btn-primary(type='submit') Submit
+
+
 
 
       
