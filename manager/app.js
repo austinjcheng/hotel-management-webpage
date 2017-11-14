@@ -139,40 +139,6 @@ let rooms = require('./routes/rooms');
 app.use('/rooms', rooms);
 
 
-app.post('/deleteRSVP', function(req, res){
-  console.log("7779");
-
-
-ReservationFromModel.findById(req.body, function(e, docs){
-
-  RoomFromModel.findOneAndUpdate(
-
-    {
-    room_number: docs.roomNum,
-    reserved: {
-      $elemMatch: {from: docs.startDate, to: docs.endDate}
-    }
-  }, {$pull: {"reserved" : {from: docs.startDate, to: docs.endDate}}}, function(e, room){
-    //console.log(docs);
-  //  res.json(room);
-  ReservationFromModel.deleteOne(req.body, function(e, docs){
-  });
-
-
-  });
-
-
-});
-
-
-res.redirect('/delete_RSVP_Helper');
-
-});
-
-app.get('/delete_RSVP_Helper', function(req, res){
-  res.redirect('/reservations/rsvp');
-});
-
 
 // Start server
 app.listen(3001, function(){

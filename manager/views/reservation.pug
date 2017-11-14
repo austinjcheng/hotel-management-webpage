@@ -12,7 +12,7 @@ block content
                   p Start Date: #{rsvp.startDate}
                   p End Date: #{rsvp.endDate}
                   h5 Reserved by: #{rsvp.guest.username}
-                  form(action="/deleteRSVP",method="post")
+                  form(action="/reservations/deleteRSVP",method="post")
                       input(type="hidden",name="_id",value=rsvp._id)
                       button#btnSubmit(type="submit") Delete
 
