@@ -25,6 +25,12 @@ router.get('/users/logout', ensureAuthenticated, function(req, res){
   res.redirect('/users/login');
 });
 
+
+router.get('/amenities', function(req, res){
+
+  res.redirect('/amenities');
+});
+
 // Add Sumbit POST route
 router.post('/add', function(req, res){
   //req.checkBody('roomNum', 'Room Number is required').notEmpty();

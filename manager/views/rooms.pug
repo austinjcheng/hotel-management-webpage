@@ -6,10 +6,10 @@ block content
       ul
           each rsvp, i in reservations
               li
-                  p #{rsvp.guest} roomNumberd #{rsvp.roomNum}
-                  p #{rsvp._id}
+                  p Reservation ID: #{rsvp._id}
+                  p Room Number: #{rsvp.roomNum}
                   form(action="/deleteRSVP",method="post")
-                      input(type="",name="_id",value=rsvp._id)
+                      input(type="hidden",name="_id",value=rsvp._id)
                       button#btnSubmit(type="submit") Delete
 
 

@@ -1,7 +1,7 @@
 doctype html
 html(lang='en')
   head
-    title Hotel Manager
+    title Hotel Client
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
@@ -15,26 +15,33 @@ html(lang='en')
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a.navbar-brand(href='#') Hotel Manager
+          a.navbar-brand(href='/') Hotel Client
         #myNavbar.collapse.navbar-collapse
           ul.nav.navbar-nav
             li.active
-              a(href='#') Home
+              a(href='/') Home
             li
-              a(href='rooms.html') Rooms
+                a(href='/amenities') Amenities
             li
-              a(href='#') Page 2
-            li
-              a(href='#') Page 3
+              a(href='/reservations/add') Add Reservation
+            if user
+              li
+                a(href='/reservations/checkYourReservation') Check Your Reservation
           ul.nav.navbar-nav.navbar-right
-            li
-              a(href='/signup.html')
-                span.glyphicon.glyphicon-user
-                |  Sign Up
-            li
-              a(href='/login.html')
-                span.glyphicon.glyphicon-log-in
-                |  Login
+            if user
+              li
+                a(href='users/logout')
+                  span.glyphicon.glyphicon-user
+                  |  Log out
+            else 
+              li
+                a(href='/users/register')
+                  span.glyphicon.glyphicon-user
+                  |  Sign Up
+              li
+                a(href='/users/login')
+                  span.glyphicon.glyphicon-log-in
+                  |  Login
     .row
       .col-sm-1
       .col-sm-10
