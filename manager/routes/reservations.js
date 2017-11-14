@@ -16,10 +16,14 @@ router.get('/rooms', ensureAuthenticated, function(req,res){
       } else {
         // render the template
         console.log('3434');
-        res.render('rooms', {
-          title: 'Rooms Reserved',
-          reservations: reservationsVar
+        console.log(reservationsVar);
+        res.render('reservation', {
+          title: 'Reservation List',
+          reservations: reservationsVar,
         });
+
+
+
     }
   });
 });
