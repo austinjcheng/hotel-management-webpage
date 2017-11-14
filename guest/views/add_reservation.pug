@@ -20,6 +20,7 @@ html(lang='en')
 
       $("#startDate").datepicker({
             numberOfMonths: 1,
+            minDate: 0,
             onSelect: function(selected) {
               $("#endDate").datepicker("option","minDate", selected)
             }

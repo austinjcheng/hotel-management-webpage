@@ -139,8 +139,8 @@ let RoomFromModel = require('./models/room');
  * MAKE SURE TO REMOVE THIS IN PROD ENVIRONMENT
 */
 
-/*
 
+/*
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }

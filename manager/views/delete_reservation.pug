@@ -1,0 +1,11 @@
+extends layoutNavBar
+
+block content
+
+      p Do you really want to delete this Reservation?
+      
+      form(method='POST' action='')
+        div.form-group
+          input#form-control(type='hidden',name='reservation._id', required='true', value=reservation._id )
+
+        button.btn.btn-primary(type='submit') Delete
