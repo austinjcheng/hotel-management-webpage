@@ -1,19 +1,24 @@
 extends layoutNavBar
-//- comment testing
+
 block content
-  h1 Rooms
-  h1 #{title} 
-  ul.list-group
-  each reservation, i in reservations
-    li.list-group-item
-      p RoomNum: #{reservation.roomNum}
-      p RoomType: #{reservation.roomstyle}
-      //- a(href="/reservations/"+reservation._id)= reservation.roomstyle  
-      p Reserved by:
-      a(href="/reservations/"+reservation._id)= reservation.guest.username
-      p Start Date: #{reservation.startDate}
-      p End Date: #{reservation.endDate}
+      h2.
+          Rooms:
+      ul
+          each room, i in rooms
+              li
+                  p Room ID: #{room._id}
+                  p RoomStyle: #{room.roomstyle}
+                  p Room Number: #{room.room_number}
+                  ul
+                      each reserved, i in room.reserved
+                          li
+                              p Start Date: #{reserved.from}
+                              p End Date: #{reserved.to}
+
+
+                  
 
 
 
-      
+
+            

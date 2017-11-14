@@ -20,6 +20,7 @@ html(lang='en')
 
       $("#startDate").datepicker({
             numberOfMonths: 1,
+            minDate: 0,
             onSelect: function(selected) {
               $("#endDate").datepicker("option","minDate", selected)
             }
@@ -62,6 +63,8 @@ html(lang='en')
           ul.nav.navbar-nav
             li.active
               a(href='/') Home
+            li
+              a(href='amenities') Amenities
             li
               a(href='/reservations/add') Add reservation
             li

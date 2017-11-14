@@ -112,6 +112,9 @@ app.get('*', function(req, res, next){
 
  //Bring in Models
  let ReservationFromModel = require('./models/reservation');
+ let RoomFromModel = require('./models/room');
+
+
 
 app.get('/', function(req, res){
 //res.send('hi world');
@@ -131,6 +134,11 @@ app.use('/reservations', reservations); // For anything that goes to /reservatio
 
 let employees = require('./routes/employees');
 app.use('/employees', employees);
+
+let rooms = require('./routes/rooms');
+app.use('/rooms', rooms);
+
+
 
 // Start server
 app.listen(3001, function(){
