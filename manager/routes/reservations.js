@@ -3,12 +3,12 @@ const router = express.Router();
 
 let ReservationFromModel = require('../models/reservation');
 let UserFromModel = require('../models/user');
-
+let RoomFromModel = require('../models/room');
 let EmployeeFromModel = require('../models/employee');
 
 
-// Room route
-router.get('/rooms', ensureAuthenticated, function(req,res){
+// Reservation route
+router.get('/rsvp', ensureAuthenticated, function(req,res){
   //http://mongoosejs.com/docs/2.7.x/docs/populate.html
    ReservationFromModel.find({}).sort([['startDate', 'ascending']]).populate('guest', ['username']).exec(function(err, reservationsVar){ // find all reservations with an empty curly brace {}
       if(err){
@@ -27,7 +27,6 @@ router.get('/rooms', ensureAuthenticated, function(req,res){
     }
   });
 });
-
 
 // Add Route
 // Add ensureAuthenticated as a 2nd parameter to protect the add route for logged in users only
@@ -153,60 +152,13 @@ console.log(req.body);
 res.render('delete_reservation');
 });
 
-// Get Single Reservation
-router.get('/:id', function(req, res){ // colon is placeholder of anything. anything in this case, is the id.
-    ReservationFromModel.findById(req.params.id, function(err, reservationResponse){
-      UserFromModel.findById(reservationResponse.guest, function(err, user){
-         res.render('reservation', {
-              reservation: reservationResponse,
-              guest: reservationResponse.guest
-         });
-      });
-    });
-});
-
-
-router.delete('/:id', function(req, res){
-  // AJAX for delete
-  if(!req.user._id){
-     res.status(500).send();
-  }
-
-  let query = {_id: req.params.id}
-
-   ReservationFromModel.findById(req.params.id, function(err, reservation){
-       if(reservation.guest != req.user._id){
-           res.status(500).send();
-       } else {
-           ReservationFromModel.remove(query, function(err){
-             if(err){
-               console.log(err);
-             } else {
-               // Since we made a request that main.js script, we need to send back a response.
-               // So do res.send(), which sends 200 by default, meaning everything is okay.
-               res.send('Success');
-             }
-           });
-      }
-  });
-});
 
 
 
-// Get Single Reservation
-router.post('/:id', function(req, res){ // colon is placeholder of anything. anything in this case, is the id.
-  res.send("delete");
-  /*  ReservationFromModel.findById(req.params.id, function(err, reservationResponse){
 
-      UserFromModel.findById(reservationResponse.guest, function(err, user){
-         res.render('reservation', {
-              reservation: reservationResponse,
-              guest: reservationResponse.guest
-         });
-      });
-    });
-    */
-});
+
+
+
 
 
 

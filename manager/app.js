@@ -135,23 +135,12 @@ app.use('/reservations', reservations); // For anything that goes to /reservatio
 let employees = require('./routes/employees');
 app.use('/employees', employees);
 
+let rooms = require('./routes/rooms');
+app.use('/rooms', rooms);
 
 
 app.post('/deleteRSVP', function(req, res){
   console.log("7779");
-  //console.log(req.body);
-  //res.send('hi delete rsvp');
-
-/*
-let reservation = ReservationFromModel();
-       reservation.roomstyle = req.body.roomstyle;
-       reservation.roomNum = req.roomNum;
-       reservation.startDate = req.body.startDate;
-       reservation.endDate = req.body.endDate;
-*/
-
-
-
 
 
 ReservationFromModel.findById(req.body, function(e, docs){
@@ -181,7 +170,7 @@ res.redirect('/delete_RSVP_Helper');
 });
 
 app.get('/delete_RSVP_Helper', function(req, res){
-  res.redirect('/reservations/rooms');
+  res.redirect('/reservations/rsvp');
 });
 
 

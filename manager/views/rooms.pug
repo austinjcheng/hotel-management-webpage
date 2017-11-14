@@ -1,16 +1,19 @@
 extends layoutNavBar
-//- comment testing
+
 block content
       h2.
-          Reservations:
+          Rooms:
       ul
-          each rsvp, i in reservations
+          each room, i in rooms
               li
-                  p Reservation ID: #{rsvp._id}
-                  p Room Number: #{rsvp.roomNum}
-                  form(action="/deleteRSVP",method="post")
-                      input(type="hidden",name="_id",value=rsvp._id)
-                      button#btnSubmit(type="submit") Delete
+                  p Room ID: #{room._id}
+                  p RoomStyle: #{room.roomstyle}
+                  p Room Number: #{room.room_number}
+                  ul
+                      each reserved, i in room.reserved
+                          li
+                              p Start Date: #{reserved.from}
+                              p End Date: #{reserved.to}
 
 
                   
@@ -18,4 +21,4 @@ block content
 
 
 
-      
+            
