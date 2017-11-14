@@ -9,14 +9,11 @@ let EmployeeFromModel = require('../models/employee');
 
 router.get('/rooms', ensureAuthenticated, function(req,res){
   //res.send('testR');
-  RoomFromModel.find({}, function(err, roomsVar){
-    //res.json(roomsVar);
+  RoomFromModel.find({}).sort([['room_number', 'ascending']]).exec(function(err, roomsVar){
     res.render('rooms', {
       rooms: roomsVar
-    })
+    });
   });
-
-
 });
 // access control
 
