@@ -124,6 +124,9 @@ app.use('/reservations', reservations); // For anything that goes to /reservatio
 let users = require('./routes/users');
 app.use('/users', users);
 
+let amenities = require('./routes/amenities');
+app.use('/amenities', amenities);
+
 
 let UserFromModel = require('./models/user');
 let ReservationFromModel = require('./models/reservation');
