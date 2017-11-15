@@ -57,6 +57,7 @@ router.post('/add', function(req, res){
       // reservation.guest = req.user.name;
        reservation.startDate = req.body.startDate;
        reservation.endDate = req.body.endDate;
+      // reservation.checkInOutStatus = "nada";
 
 
          RoomFromModel.findOneAndUpdate({
