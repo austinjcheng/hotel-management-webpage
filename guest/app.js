@@ -151,6 +151,10 @@ function getRandomInt(min, max) {
 
 /*
 
+ReservationFromModel.remove({}, function(res){
+    console.log("removed records");
+});
+
 RoomFromModel.remove({}, function(res){
     console.log("removed records");
 });
