@@ -143,13 +143,13 @@ let RoomFromModel = require('./models/room');
 */
 
 
-/*
+
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 
-
+/*
 
 RoomFromModel.remove({}, function(res){
     console.log("removed records");
@@ -227,8 +227,8 @@ RoomFromModel.count({}, function(err, count){
     }
 });
 
-*/
 
+*/
 
 
 

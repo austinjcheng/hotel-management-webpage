@@ -1,0 +1,29 @@
+extends layoutNavBar
+
+block content
+      h2.
+          Reservations:
+      ul
+          each rsvp, i in reservations
+              li
+                  p Reservation ID: #{rsvp._id}
+                  p RoomStyle: #{rsvp.roomstyle}
+                  p Room Number: #{rsvp.roomNum}
+                  p Start Date: #{rsvp.startDate}
+                  p End Date: #{rsvp.endDate}
+                  p Check In/Check Out Status: #{rsvp.checkInOutStatus}
+                  h5 Reserved by: #{rsvp.guest.username}
+                  form(action="/reservations/checkIn",method="post")
+                      input(type="hidden",name="_id",value=rsvp._id)
+                      button#btnSubmit(type="submit") CheckIn
+                  form(action="/reservations/deleteRSVP",method="post")
+                      input(type="hidden",name="_id",value=rsvp._id)
+                      button#btnSubmit(type="submit") Delete
+
+
+                  
+
+
+
+
+            
