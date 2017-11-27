@@ -13,6 +13,9 @@ block content
       p Start Date: #{reservation.startDate}
       p End Date: #{reservation.endDate}
       p Check Status: #{reservation.checkInOutStatus}
+      form(action="/reservations/deleteRSVP",method="post")
+          input(type="hidden",name="_id",value=reservation._id)
+          button#btnSubmit(type="submit") Cancel
 
 
 
