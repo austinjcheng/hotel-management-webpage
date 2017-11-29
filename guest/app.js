@@ -188,7 +188,7 @@ RoomFromModel.count({}, function(err, count){
                 reserved: [
                     {from: '8/22/2017', to: '8/26/2017'},
                     {from: '11/22/2017', to: '11/26/2017'},
-                    {from: '1/2/2018', to: '1/6/2018'}
+                    {from: '01/02/2018', to: '01/06/2018'}
                 ]
             });
           } else if( i >= 10 && i <  20){
@@ -198,7 +198,7 @@ RoomFromModel.count({}, function(err, count){
                 reserved: [
                 {from: '8/22/2017', to: '8/26/2017'},
                 {from: '11/22/2017', to: '11/26/2017'},
-                {from: '1/2/2018', to: '1/6/2018'}
+                {from: '01/02/2018', to: '01/06/2018'}
                 ]
             });
           } else if (i >= 21 && i < 30){
@@ -208,7 +208,7 @@ RoomFromModel.count({}, function(err, count){
                 reserved: [
                 {from: '8/22/2017', to: '8/26/2017'},
                 {from: '11/22/2017', to: '11/26/2017'},
-                {from: '1/2/2018', to: '1/6/2018'}
+                {from: '01/2/2018', to: '01/06/2018'}
                 ]
             });
           } else if ( i >= 30){
@@ -218,7 +218,7 @@ RoomFromModel.count({}, function(err, count){
                 reserved: [
                 {from: '8/22/2017', to: '8/26/2017'},
                 {from: '11/22/2017', to: '11/26/2017'},
-                {from: '1/2/2018', to: '1/6/2018'}
+                {from: '01/02/2018', to: '01/06/2018'}
                 ]
             });
           }
