@@ -28,6 +28,49 @@ router.get('/rsvp', ensureAuthenticated, function(req,res){
   });
 });
 
+router.get('/rsvpCheckedInList', ensureAuthenticated, function(req,res){
+
+  ReservationFromModel.find({checkInOutStatus: "Checked In"}).sort([['startDate', 'ascending']]).populate('guest', ['username']).exec(function(err, reservationsVar){ // find all reservations with an empty curly brace {}
+     if(err){
+       console.log(err);
+     } else {
+       // render the template
+       console.log('3434');
+       console.log(reservationsVar);
+       res.render('reservationCheckInList', {
+         title: 'Reservation CheckedIn List',
+         reservations: reservationsVar,
+       });
+
+
+
+   }
+ });
+});
+
+router.get('/rsvpCheckedOutList', ensureAuthenticated, function(req,res){
+
+  ReservationFromModel.find({checkInOutStatus: "Checked Out"}).sort([['startDate', 'ascending']]).populate('guest', ['username']).exec(function(err, reservationsVar){ // find all reservations with an empty curly brace {}
+     if(err){
+       console.log(err);
+     } else {
+       // render the template
+       console.log('3434');
+       console.log(reservationsVar);
+       res.render('reservationCheckOutList', {
+         title: 'Reservation CheckedOut List',
+         reservations: reservationsVar,
+       });
+
+
+
+   }
+ });
+});
+
+
+
+
 // Add Route
 // Add ensureAuthenticated as a 2nd parameter to protect the add route for logged in users only
 router.get('/add', ensureAuthenticated, function(req, res){
@@ -71,6 +114,69 @@ router.post('/add', function(req, res){
 
 
 
+});
+
+router.post('/checkIn', function(req, res){
+
+
+/*
+
+http://mongoosejs.com/docs/documents.html
+
+Documents
+
+Mongoose documents represent a one-to-one mapping to documents as stored in MongoDB. Each document is an instance of its Model.
+
+Updating
+
+There are a number of ways to update documents.
+
+If we do need the document returned in our application there is another, often better, option:
+
+Tank.findByIdAndUpdate(id, { $set: { size: 'large' }}, { new: true }, function (err, tank) {
+  if (err) return handleError(err);
+  res.send(tank);
+});
+
+*/
+  ReservationFromModel.update({ _id: req.body }, { $set: { checkInOutStatus: 'Checked In' }}, function(e, r){
+    if(e){
+      console.log(e);
+    }
+  });
+
+  res.redirect('/reservations/checkInHelper');
+  });
+
+
+  router.get('reservations/checkInHelper', function(req, res){
+    res.redirect('/reservations/rsvpCheckedInList');
+  });
+
+  router.get('/checkInHelper', function(req, res){
+    res.redirect('/reservations/rsvpCheckedInList');
+  });
+
+
+
+  router.post('/checkOut', function(req, res){
+
+    ReservationFromModel.update({ _id: req.body }, { $set: { checkInOutStatus: 'Checked Out' }}, function(e, r){
+      if(e){
+        console.log(e);
+      }
+    });
+
+    res.redirect('/reservations/checkOutHelper');
+    });
+
+
+router.get('reservations/checkOutHelper', function(req, res){
+  res.redirect('/reservations/rsvpCheckedOutList');
+});
+
+router.get('/checkOutHelper', function(req, res){
+  res.redirect('/reservations/rsvpCheckedOutList');
 });
 
 router.post('/deleteRSVP', function(req, res){

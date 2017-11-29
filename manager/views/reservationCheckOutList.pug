@@ -16,9 +16,6 @@ block content
                   form(action="/reservations/checkIn",method="post")
                       input(type="hidden",name="_id",value=rsvp._id)
                       button#btnSubmit(type="submit") CheckIn
-                  form(action="/reservations/checkOut",method="post")
-                      input(type="hidden",name="_id",value=rsvp._id)
-                      button#btnSubmit(type="submit") CheckOut
                   form(action="/reservations/deleteRSVP",method="post")
                       input(type="hidden",name="_id",value=rsvp._id)
                       button#btnSubmit(type="submit") Delete

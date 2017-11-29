@@ -21,7 +21,7 @@ router.get('/add', ensureAuthenticated, function(req, res){
 
 router.get('/users/logout', ensureAuthenticated, function(req, res){
   req.logout();
-  req.flash('success', 'U are logged out');
+  req.flash('success', 'You are logged out');
   res.redirect('/users/login');
 });
 
@@ -53,10 +53,11 @@ router.post('/add', function(req, res){
 
        let reservation = ReservationFromModel();
        reservation.roomstyle = req.body.roomstyle;
-      reservation.guest = req.user._id;
+       reservation.guest = req.user._id;
       // reservation.guest = req.user.name;
        reservation.startDate = req.body.startDate;
        reservation.endDate = req.body.endDate;
+       reservation.checkInOutStatus = "Awaiting Check In";
 
 
          RoomFromModel.findOneAndUpdate({
@@ -213,6 +214,47 @@ router.delete('/:id', function(req, res){
            });
       }
   });
+});
+
+
+router.post('/deleteRSVP', function(req, res){
+  console.log("77d9");
+
+
+ReservationFromModel.findById(req.body, function(e, docs){
+
+  RoomFromModel.findOneAndUpdate(
+
+    {
+    room_number: docs.roomNum,
+    reserved: {
+      $elemMatch: {from: docs.startDate, to: docs.endDate}
+    }
+  }, {$pull: {"reserved" : {from: docs.startDate, to: docs.endDate}}}, function(e, room){
+    //console.log(docs);
+  //  res.json(room);
+  ReservationFromModel.deleteOne(req.body, function(e, docs){
+  });
+
+
+  });
+
+
+});
+
+
+res.redirect('/reservations/delete_RSVP_Helper');
+
+});
+
+router.get('reservations/delete_RSVP_Helper', function(req, res){
+  req.flash('success', 'Reservation cancelled');
+  res.redirect('/reservations/checkYourReservation');
+});
+
+router.get('/delete_RSVP_Helper', function(req, res){
+  req.flash('success', 'Reservation cancelled');
+  res.redirect('/reservations/checkYourReservation');
 });
 
 

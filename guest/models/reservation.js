@@ -28,6 +28,10 @@ let reservationSchema = mongoose.Schema({
   processed: {
     type: String,
     required: false
+  },
+  checkInOutStatus: {
+    type: String,
+    required: false
   }
 
 });

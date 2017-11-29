@@ -100,11 +100,12 @@ html(lang='en')
 
       
       #form-group
-        label(for='roomstyle') Room Style (Select 1)
+        label(for='roomstyle') 
           - const roomstyleOptions = [{value: 'Standard Single'}, {value: 'Superior Twin'}, {value: 'Deluxe Double'}, {value: 'Family Suite'}]
             select#roomstyle(name='roomstyle' size='4' multiple required)
                 each roomstyle in roomstyleOptions
-                  option(value=(roomstyle.value)) #{roomstyle.value}    
+                  option(value=(roomstyle.value)) #{roomstyle.value} 
+            p Room Style (Select 1)   
       
       div.form-group
       label(for='startDate') Start Date:

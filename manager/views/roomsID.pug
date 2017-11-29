@@ -1,0 +1,19 @@
+extends layoutNavBar
+
+block content
+              h1 Room Number: #{rooms.room_number}
+              p Room Type: #{rooms.roomstyle}
+              p Reserved Dates:
+              ul
+                each reserved, i in rooms.reserved
+                  li
+                    p Start Date: #{reserved.from}
+                    p End Date: #{reserved.to}
+
+
+                  
+
+
+
+
+            

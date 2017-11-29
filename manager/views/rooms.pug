@@ -1,24 +1,9 @@
 extends layoutNavBar
 
 block content
-      h2.
-          Rooms:
-      ul
-          each room, i in rooms
-              li
-                  p Room ID: #{room._id}
-                  p RoomStyle: #{room.roomstyle}
-                  p Room Number: #{room.room_number}
-                  ul
-                      each reserved, i in room.reserved
-                          li
-                              p Start Date: #{reserved.from}
-                              p End Date: #{reserved.to}
-
-
-                  
-
-
-
-
-            
+    h1 List of Rooms:
+    ul.list-group
+    each room, i in rooms
+      li.list-group-item
+       z Room Number: 
+        a(href="/rooms/"+room._id)= room.room_number 
