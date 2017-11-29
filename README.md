@@ -1,11 +1,11 @@
 # hotel-management-webpage
 
-Guest: https://hotel-management-webpage-tkclwnkehy.now.sh/
-Manager: https://hotel-management-webpage-qwblhojgsi.now.sh/
+- Manager Live Demo: https://hotel-management-webpage-ivnptlycpb.now.sh/   
+- Guest Live Demo: https://hotel-management-webpage-vatrntcnje.now.sh/
 
 CECS 445
 
-Instructions for running the app:
+Instructions for running the app locally:
 
 You must have node and npm installed.
 Install node and npm if your computer doesn't have them.
@@ -22,6 +22,8 @@ Mac/Linux instructions:
     cd exampleDirectory/
 
     git clone https://github.com/patrickly/hotel-management-webpage.git
+    or
+    git clone https://github.com/austinjcheng/hotel-management-webpage.git
 
     ls
 
