@@ -25,6 +25,22 @@ router.get('/employees/logout', function(req, res){
 });
 
 
+
+
+
+router.get('/:id', ensureAuthenticated, function(req,res){
+  //res.send('testR');
+  console.log(112917);
+  console.log(req);
+  console.log(req.params.id);
+  RoomFromModel.findById(req.params.id, function(err, roomsVar){
+    res.render('roomsID', {
+      rooms: roomsVar
+    });
+  });
+});
+
+
 function ensureAuthenticated(req, res, next){
   if(req.isAuthenticated()){ // we can call req.isAuthenticated() because of passport middleware
     return next();
