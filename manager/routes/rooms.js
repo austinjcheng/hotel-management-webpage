@@ -17,6 +17,14 @@ router.get('/rooms', ensureAuthenticated, function(req,res){
 });
 // access control
 
+// logout
+router.get('/employees/logout', function(req, res){
+  req.logout();
+  req.flash('success', 'You are logged out');
+  res.redirect('/employees/login');
+});
+
+
 function ensureAuthenticated(req, res, next){
   if(req.isAuthenticated()){ // we can call req.isAuthenticated() because of passport middleware
     return next();
